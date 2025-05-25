@@ -14,7 +14,7 @@ services:
       - app-private
   backend:
     # 해당 디렉토리의 Dockerfile을 사용해 이미지를 빌드
-    build: ./be15-4th-sixmycat-catchy-BE
+    build: backend
     # 컨테이너 이름을 'backend'로 설정
     container_name: backend
     # 호스트의 8080 포트를 컨테이너의 8080 포트로 매핑
@@ -25,13 +25,13 @@ services:
       - app-public
       - app-private
     env_file:
-      - ./be15-4th-sixmycat-catchy-BE/.env
+      - backend/.env
     depends_on:
       - mariadb
 
   frontend:
     # 해당 디렉토리의 Dockerfile을 사용해 이미지를 빌드
-    build: ./be15-4th-sixmycat-catchy-FE
+    build: frontend
     # 컨테이너 이름을 'frontend'로 설정
     container_name: frontend
     # 호스트의 5173 포트를 컨테이너의 5173 포트로 매핑
@@ -41,7 +41,7 @@ services:
     networks:
       - app-public
     env_file:
-      - be15-4th-sixmycat-catchy-FE/.env.production
+      - frontend/.env.production
   redis:
     image: redis:7.2.5
     container_name: redis
