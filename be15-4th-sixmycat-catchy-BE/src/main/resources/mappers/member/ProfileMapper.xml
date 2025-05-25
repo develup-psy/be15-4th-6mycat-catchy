@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sixmycat.catchy.feature.member.query.mapper.ProfileMapper">
+
+    <!-- 기본 회원 정보 -->
+    <select id="findMemberById" parameterType="long"
+            resultType="com.sixmycat.catchy.feature.member.query.dto.response.MemberResponse">
+        SELECT
+        id AS id,
+        email,
+        nickname,
+        name,
+        contact_number AS contactNumber,
+        profile_image AS profileImage,
+        social,
+        status_message AS statusMessage
+        FROM member
+        WHERE id = #{memberId}
+    </select>
+
+
+    <!-- 팔로우 수 정보 -->
+    <select id="findFollowCountById" parameterType="long"
+            resultType="com.sixmycat.catchy.feature.member.query.dto.response.FollowResponse">
+        SELECT
+        (SELECT COUNT(*) FROM follow WHERE following_id = #{memberId}) AS followerCount,
+        (SELECT COUNT(*) FROM follow WHERE follower_id = #{memberId}) AS followingCount
+    </select>
+
+
+    <!-- 고양이 정보 리스트 조회 -->
+    <select id="findCatsByMemberId" parameterType="long" resultType="com.sixmycat.catchy.feature.member.query.dto.response.CatResponse">
+        SELECT
+        id,
+        name,
+        gender,
+        breed,
+        birth_date AS birthDate,
+        age
+        FROM cat
+        WHERE member_id = #{memberId}
+    </select>
+
+    <select id="findMemberByNickname" resultType="com.sixmycat.catchy.feature.member.query.dto.response.MemberResponse">
+        SELECT
+        id,
+        email,
+        nickname,
+        name,
+        contact_number AS contactNumber,
+        profile_image AS profileImage,
+        social,
+        status_message AS statusMessage
+        FROM member
+        WHERE nickname = #{nickname}
+        AND deleted_at IS NULL
+    </select>
+
+</mapper>

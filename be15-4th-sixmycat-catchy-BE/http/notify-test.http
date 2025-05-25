@@ -1,0 +1,5 @@
+### sse
+GET /api/v1/notifiaction/connect
+Header:
+    X-USER-ID: 1,
+    Last-Event-Id: ""
