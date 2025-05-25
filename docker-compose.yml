@@ -1,0 +1,61 @@
+# Docker Compose 파일의 버전을 정의한다. 최신 기능과 호환성을 결정한다.
+version: '3.8'
+services:
+  mariadb:
+    image: mariadb:11.7.2
+    environment:
+      MARIADB_ROOT_PASSWORD: swcamp
+      MARIADB_DATABASE: 6mycat
+      MYSQL_USER: swcamp
+      MYSQL_PASSWORD: swcamp
+    ports:
+      - "3306:3306"
+    networks:
+      - app-private
+  backend:
+    # 해당 디렉토리의 Dockerfile을 사용해 이미지를 빌드
+    build: ./be15-4th-sixmycat-catchy-BE
+    # 컨테이너 이름을 'backend'로 설정
+    container_name: backend
+    # 호스트의 8080 포트를 컨테이너의 8080 포트로 매핑
+    ports:
+      - "8000:8000"
+    # 사용자 정의 네트워크에 연결
+    networks:
+      - app-public
+      - app-private
+    env_file:
+      - ./be15-4th-sixmycat-catchy-BE/.env
+    depends_on:
+      - mariadb
+
+  frontend:
+    # 해당 디렉토리의 Dockerfile을 사용해 이미지를 빌드
+    build: ./be15-4th-sixmycat-catchy-FE
+    # 컨테이너 이름을 'frontend'로 설정
+    container_name: frontend
+    # 호스트의 5173 포트를 컨테이너의 5173 포트로 매핑
+    ports:
+      - "5173:5173"
+    # 동일 네트워크에 연결하여 DNS로 통신 가능
+    networks:
+      - app-public
+    env_file:
+      - be15-4th-sixmycat-catchy-FE/.env.production
+  redis:
+    image: redis:7.2.5
+    container_name: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - app-private
+
+
+# 네트워크 정의
+networks:
+  app-public:
+    driver: bridge
+  app-private:
+    driver: bridge
+    internal: true
+

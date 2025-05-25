@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: boot-dep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: boot-kube
+  template:
+    metadata:
+      labels:
+        app: boot-kube
+    spec:
+      containers:
+        - name: boot-container
+          image: kimjy8937/k8s-boot:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8000
+          envFrom:
+            - configMapRef:
+                name: catchy-config    # <- ConfigMap 이름
+            - secretRef:
+                name: catchy-secret    # <- Secret 이름
