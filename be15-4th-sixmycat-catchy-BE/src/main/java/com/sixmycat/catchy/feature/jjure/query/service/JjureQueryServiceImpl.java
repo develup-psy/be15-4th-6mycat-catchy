@@ -55,6 +55,7 @@ public class JjureQueryServiceImpl implements JjureQueryService {
                 .isLiked(isLiked)
                 .isMine(isMine)
                 .createdAt(baseInfo.getCreatedAt())
+                .thumbnailUrl(baseInfo.getThumbnailUrl())
                 .build();
     }
     @Override
@@ -82,6 +83,7 @@ public class JjureQueryServiceImpl implements JjureQueryService {
                     .isLiked(isLiked)
                     .isMine(isMine)
                     .createdAt(base.getCreatedAt())
+                    .thumbnailUrl(base.getThumbnailUrl())
                     .build();
         }).toList();
 

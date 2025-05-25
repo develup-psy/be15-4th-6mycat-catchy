@@ -63,6 +63,8 @@ dependencies {
 	// Spring Cloud AWS
 	implementation 'io.awspring.cloud:spring-cloud-aws-starter-s3:3.3.0'
 	implementation 'software.amazon.awssdk:rekognition:2.25.10'
+
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 }
 
 tasks.named('test') {

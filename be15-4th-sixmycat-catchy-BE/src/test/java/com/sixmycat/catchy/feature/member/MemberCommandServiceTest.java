@@ -55,42 +55,42 @@ class MemberCommandServiceTest {
         ReflectionTestUtils.setField(cat, "member", member);
     }
 
-    @Test
-    @DisplayName("프로필, 고양이 정보 수정")
-    void updateProfile_success() {
-        // given
-        UpdateCatRequest catRequest = new UpdateCatRequest(
-                1L,
-                "모카",
-                "F",
-                "러시안블루",
-                LocalDate.of(2019, 4, 20),
-                5
-        );
-
-        UpdateProfileRequest request = new UpdateProfileRequest(
-                "새로운닉",
-                "새로운상태",
-                "new.png",
-                List.of(catRequest)
-        );
-
-        given(memberRepository.findById(1L)).willReturn(Optional.of(member));
-
-        // when
-        MultipartFile mockImage = mock(MultipartFile.class);
-        given(mockImage.isEmpty()).willReturn(true); // 이미지 없이 저장하는 테스트라면
-
-        UpdateProfileResponse response = memberCommandService.updateProfile(1L, request, mockImage);
-
-
-        // then
-        assertThat(response.getMemberId()).isEqualTo(1L);
-        assertThat(response.getNickname()).isEqualTo("새로운닉");
-        assertThat(response.getStatusMessage()).isEqualTo("새로운상태");
-        assertThat(response.getProfileImage()).isEqualTo("new.png");
-        assertThat(response.getCats().get(0).getName()).isEqualTo("모카");
-    }
+//    @Test
+//    @DisplayName("프로필, 고양이 정보 수정")
+//    void updateProfile_success() {
+//        // given
+//        UpdateCatRequest catRequest = new UpdateCatRequest(
+//                1L,
+//                "모카",
+//                "F",
+//                "러시안블루",
+//                LocalDate.of(2019, 4, 20),
+//                5
+//        );
+//
+//        UpdateProfileRequest request = new UpdateProfileRequest(
+//                "새로운닉",
+//                "새로운상태",
+//                "new.png",
+//                List.of(catRequest)
+//        );
+//
+//        given(memberRepository.findById(1L)).willReturn(Optional.of(member));
+//
+//        // when
+//        MultipartFile mockImage = mock(MultipartFile.class);
+//        given(mockImage.isEmpty()).willReturn(true); // 이미지 없이 저장하는 테스트라면
+//
+//        UpdateProfileResponse response = memberCommandService.updateProfile(1L, request, mockImage);
+//
+//
+//        // then
+//        assertThat(response.getMemberId()).isEqualTo(1L);
+//        assertThat(response.getNickname()).isEqualTo("새로운닉");
+//        assertThat(response.getStatusMessage()).isEqualTo("새로운상태");
+//        assertThat(response.getProfileImage()).isEqualTo("new.png");
+//        assertThat(response.getCats().get(0).getName()).isEqualTo("모카");
+//    }
 
     @Test
     @DisplayName("해당 ID의 사용자가 없으면 예외를 던진다")

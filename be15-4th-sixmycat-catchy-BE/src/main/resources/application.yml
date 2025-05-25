@@ -145,4 +145,8 @@ app:
     login-success-url: ${FRONT_LOGIN_SUCCESS_URL}
 
 
-
+management:
+  endpoints:
+    web:
+      exposure:
+        include: env, health, info
