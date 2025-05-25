@@ -26,7 +26,7 @@
         alert("잘못된 접근입니다. 이메일 또는 소셜 정보가 누락되었습니다.");
     }
 
-    fetch(`http://localhost:8000/api/v1/members/temp-info?email=${email}&social=${social}`)
+    fetch(`http://localhost/boot/api/v1/members/temp-info?email=${email}&social=${social}`)
         .then(res => res.json())
         .then(res => {
             const data = res.data;
@@ -66,7 +66,7 @@
         }
 
         try {
-            const res = await fetch('http://localhost:8000/api/v1/members/signup/extra', {
+            const res = await fetch('http://localhost/boot/api/v1/members/signup/extra', {
                 method: 'POST',
                 body: formData
             });
