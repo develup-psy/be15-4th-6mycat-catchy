@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8" />
+    <title>추가 정보 입력</title>
+</head>
+<body>
+<h1>추가 정보 입력</h1>
+
+<form id="extra-form" enctype="multipart/form-data">
+    <label>이름: <input type="text" name="name" id="name" required /></label><br/>
+    <label>전화번호: <input type="text" name="contactNumber" id="contactNumber" required /></label><br/>
+    <label>닉네임: <input type="text" name="nickname" id="nickname" required /></label><br/>
+    <label>프로필 이미지: <input type="file" name="profileImage" id="profileImage" accept="image/*" /></label><br/>
+    <button type="submit">회원가입 완료</button>
+</form>
+
+<pre id="result"></pre>
+
+<script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const email = urlParams.get('email');
+    const social = urlParams.get('social');
+
+    if (!email || !social) {
+        alert("잘못된 접근입니다. 이메일 또는 소셜 정보가 누락되었습니다.");
+    }
+
+    fetch(`http://localhost/boot/api/v1/members/temp-info?email=${email}&social=${social}`)
+        .then(res => res.json())
+        .then(res => {
+            const data = res.data;
+
+            if (data.name) {
+                const input = document.getElementById('name');
+                input.value = data.name;
+                input.readOnly = true;
+            }
+
+            if (data.contactNumber) {
+                const input = document.getElementById('contactNumber');
+                input.value = data.contactNumber;
+                input.readOnly = true;
+            }
+        })
+        .catch(err => {
+            console.error("임시 회원 정보 불러오기 실패:", err);
+            alert("임시 회원 정보를 불러오지 못했습니다.");
+        });
+
+    document.getElementById('extra-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const form = e.target;
+        const formData = new FormData();
+
+        formData.append("email", email);
+        formData.append("social", social.toUpperCase());
+        formData.append("name", form.name.value);
+        formData.append("contactNumber", form.contactNumber.value.replace(/-/g, ''));
+        formData.append("nickname", form.nickname.value);
+
+        const profileImage = document.getElementById("profileImage").files[0];
+        if (profileImage) {
+            formData.append("profileImage", profileImage);
+        }
+
+        try {
+            const res = await fetch('http://localhost/boot/api/v1/members/signup/extra', {
+                method: 'POST',
+                body: formData
+            });
+
+            const result = await res.json();
+            document.getElementById('result').textContent = JSON.stringify(result, null, 2);
+        } catch (err) {
+            console.error("회원가입 요청 실패:", err);
+            alert("회원가입에 실패했습니다.");
+        }
+    });
+</script>
+</body>
+</html>
