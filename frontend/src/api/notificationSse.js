@@ -2,6 +2,7 @@
 import { showNotificationToast } from '@/utills/toast.js';
 import { useAuthStore } from '@/stores/auth.js';
 import { EventSourcePolyfill } from 'event-source-polyfill';
+import { showNotificationBadge } from '@/features/notification/utils/notificationBadge.js';
 
 let eventSource = null;
 
@@ -37,16 +38,18 @@ export function subscribeToNotification(onMessageCallback) {
 
   eventSource.addEventListener('sse', (event) => {
     try {
-      console.log(event.data);
-
       const data = JSON.parse(event.data);
       const id = event.lastEventId || event.id;
       if (id) localStorage.setItem('lastEventId', id);
 
       console.log('📩 알림 수신:', data);
+
+      // store 업데이트
       onMessageCallback(data);
-      // 여기에 toast, 알림 UI, store 업데이트 등 연결
+      // toast 알림 추가
       showNotificationToast(data.senderNickname + '님이 ' + data.content);
+      // UI 변경
+      showNotificationBadge();
     } catch (err) {
       console.error('❌ 알림 파싱 실패:', err);
     }
