@@ -1,10 +1,10 @@
 <template>
-  <div class="text-[24px] font-bold text-left mb-6">차단 목록</div>
+  <div class="text-headline-md font-bold mb-6">차단 목록</div>
   <ul class="space-y-4">
     <li
-      v-for="user in blockedUsers"
-      :key="user.blockedId"
-      class="flex items-center justify-between"
+        v-for="user in blockedUsers"
+        :key="user.blockedId"
+        class="flex items-center justify-between"
     >
       <div class="flex items-center gap-4">
         <DefaultProfile :src="user.profileImage" :size="40" />
@@ -14,8 +14,8 @@
         </div>
       </div>
       <button
-        class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-1.5 rounded text-sm"
-        @click="unblock(user.blockedId)"
+          class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-1.5 rounded text-sm"
+          @click="unblock(user.blockedId)"
       >
         해제
       </button>
