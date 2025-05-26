@@ -8,7 +8,7 @@ import FeedUploadModal from '@/features/feed/components/FeedUploadModal.vue';
 import NotificationModal from '@/features/notification/components/NotificationModal.vue';
 import { createFeed, uploadImages } from '@/api/feed.js';
 import { showErrorToast, showSuccessToast } from '@/utills/toast.js';
-import { startLoading } from '@/composable/useLoadingBar.js';
+import {startLoading, startLoadingAsync} from '@/composable/useLoadingBar.js';
 import { useFeedRefreshStore } from '@/stores/feedRefreshStore.js';
 import { useRouter } from 'vue-router';
 import {
@@ -70,7 +70,7 @@ async function handleUpload() {
   if (!file || !thumbnailBlob.value) return;
 
   try {
-    startLoading();
+    startLoadingAsync();
 
     // 1. 썸네일 S3 업로드
     const thumbnailRes = await uploadThumbnailImage(thumbnailBlob.value);
@@ -95,6 +95,7 @@ async function handleUpload() {
     caption.value = '';
     uploadStore.setFile(null);
     thumbnailBlob.value = null;
+    stopLoadingAsync();
   }
 }
 
