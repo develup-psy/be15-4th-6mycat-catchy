@@ -2,6 +2,7 @@ package com.sixmycat.catchy.feature.notification.command.application.service;
 
 import com.sixmycat.catchy.exception.BusinessException;
 import com.sixmycat.catchy.exception.ErrorCode;
+import com.sixmycat.catchy.feature.follow.command.domain.repository.FollowRepository;
 import com.sixmycat.catchy.feature.member.command.domain.repository.MemberRepository;
 import com.sixmycat.catchy.feature.notification.command.domain.aggregate.Notification;
 import com.sixmycat.catchy.feature.notification.command.domain.aggregate.NotificationType;
@@ -27,6 +28,7 @@ public class NotificationCommandService {
     private final NotificationRepository notificationRepository;
     private final SseEmitterRepository sseEmitterRepository;
     private final MemberRepository memberRepository;
+    private final FollowRepository followRepository;
 
     private static final Long DEFAULT_TIMEOUT = 60L * 1000 * 60; // 1시간
 
@@ -46,15 +48,19 @@ public class NotificationCommandService {
 
         Optional<String> optionalProfileImage = memberRepository.findProfileImageByIdAndDeletedAtIsNull(senderMemberId);
         String profileImage = optionalProfileImage.orElse("");
+        String senderNickname = memberRepository.findNicknameById(senderMemberId).orElse("");
+        boolean alreadyFollowed = followRepository.existsByFollowerIdAndFollowingId(receiverMemberId, senderMemberId);
 
         Map<String, Object> payload = Map.of(
                 "memberId", receiverMemberId,
-                "senderMemberId", senderMemberId,
+                "senderId", senderMemberId,
+                "senderNickname", senderNickname,
                 "profileImage", profileImage,
                 "content", content,
                 "type", type,
                 "relatedId", relatedId,
-                "createdAt", LocalDateTime.now()
+                "createdAt", LocalDateTime.now(),
+                "initialFollowing", alreadyFollowed
         );
 
         send(receiverMemberId, payload);

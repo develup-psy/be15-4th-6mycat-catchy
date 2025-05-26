@@ -31,7 +31,7 @@ public class NotificationCommandController {
     public ResponseEntity<String> sendTestNotification(
             @AuthenticationPrincipal String memberId) {
 
-        notificationCommandService.createAndSendNotification(Long.parseLong(memberId), 1L, "좋아요 추가되었습니다", NotificationType.FEED_LIKE, 123L);
+        notificationCommandService.createAndSendNotification(Long.parseLong(memberId), 4L, "좋아요 추가되었습니다", NotificationType.FEED_LIKE, 123L);
         return ResponseEntity.ok("알림 전송 완료");
     }
 }
