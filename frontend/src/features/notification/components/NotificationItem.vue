@@ -15,7 +15,7 @@ const props = defineProps({
     required: true,
   },
 });
-
+console.log(props.notification);
 const emit = defineEmits(['close']);
 
 const isModalOpenRef = toRef(props, 'isModalOpen');
@@ -23,6 +23,7 @@ const showFollow = ref(props.notification.type === 'FOLLOW');
 const initialIsFollowing = ref(props.notification.initialFollowing);
 const currentIsFollowing = ref(props.notification.initialFollowing);
 const router = useRouter();
+const type = props.notification.type;
 
 const timeAgo = computed(() => {
   const now = new Date();
@@ -43,7 +44,6 @@ const timeAgo = computed(() => {
 });
 
 const notificationText = computed(() => {
-  const type = props.notification.type;
   const base = `님이 회원님`;
   switch (type) {
     case 'FOLLOW':
@@ -66,6 +66,36 @@ const notificationText = computed(() => {
 function goToProfile() {
   emit('close');
   router.push(`/members/${props.notification.senderId}`);
+}
+
+function goToRelatedFeed() {
+  let url = '';
+
+  const type = props.notification.type;
+
+  switch (type) {
+    case 'FOLLOW':
+      url = `/members/${props.notification.senderId}`;
+      break;
+    case 'COMMENT':
+    case 'RECOMMENT':
+      // 댓글/답글 알림은 아직 이동 페이지 없음 → 비워둠
+      return;
+    case 'FEED_LIKE':
+      url = `/feed/${props.notification.relatedId}`;
+      break;
+    case 'JJURE_LIKE':
+      url = `/jjure/${props.notification.relatedId}`;
+      break;
+    case 'BIRTHDAY':
+      url = `/profile`;
+      break;
+    default:
+      return;
+  }
+
+  emit('close');
+  router.push(url);
 }
 
 function toggleFollow() {
@@ -91,7 +121,7 @@ watch(isModalOpenRef, (newVal, oldVal) => {
 </script>
 
 <template>
-  <div class="flex items-center gap-2">
+  <div class="flex items-center gap-2 cursor-pointer" @click="goToRelatedFeed">
     <DefaultProfile :src="props.notification.profileImage" :size="56" @click="goToProfile" />
     <div class="text-start text-sm leading-snug flex-1">
       <span class="font-bold">{{ props.notification.senderNickname }}</span>
