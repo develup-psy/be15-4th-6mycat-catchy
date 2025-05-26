@@ -55,6 +55,7 @@ public class SecurityConfig {
                                 "/static/login.html",
                                 "/api/v1/members/login/test",
                                 "/api/v1/profiles/{memberId}",
+                                "/api/v1/jjures",
                                 "/api/v1/feeds"
                         ).permitAll()
                         .requestMatchers(HttpMethod.DELETE, "/api/v1/members").authenticated()
