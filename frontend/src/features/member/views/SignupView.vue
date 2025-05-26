@@ -18,7 +18,7 @@ import KakaoIcon from '@/assets/images/member/kakao-talk-pink.png';
       <SignupButton
         :iconSrc="GoogleIcon"
         text="Google로 시작하기"
-        redirectUrl="http://localhost/boot/oauth2/authorization/google"
+        redirectUrl="http://localhost:8000/oauth2/authorization/google"
       />
       <SignupButton
         :iconSrc="NaverIcon"

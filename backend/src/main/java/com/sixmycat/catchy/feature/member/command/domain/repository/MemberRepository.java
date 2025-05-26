@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import javax.swing.text.html.Option;
 import java.util.Optional;
 
 @Repository
@@ -22,4 +23,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     Optional<Member> findByEmailAndSocialAndDeletedAtIsNull(String email, String upperCase);
 
     boolean existsByNickname(String nickname);
+
+    @Query("SELECT m.nickname FROM Member m WHERE m.id = :id AND m.deletedAt IS NULL")
+    Optional<String> findNicknameById(Long id);
 }

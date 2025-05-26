@@ -4,6 +4,9 @@ import { ref, toRef, watch } from 'vue';
 import { getNotifications } from '@/api/notification.js';
 import { startLoading } from '@/composable/useLoadingBar.js';
 import { useInfiniteScroll } from '@/composable/useInfiniteScroll.js';
+import { useNotificationStore } from '@/stores/notification.js';
+import { useAuthStore } from '@/stores/auth.js';
+import { clearNotificationBadge } from '@/features/notification/utils/notificationBadge.js';
 
 const props = defineProps({
   isModalOpen: {
@@ -13,23 +16,33 @@ const props = defineProps({
 });
 
 const isModalOpenRef = toRef(props, 'isModalOpen');
-
 const emit = defineEmits(['close']);
-
 const scrollContainer = ref(null);
+const notificationStore = useNotificationStore();
+const authStore = useAuthStore();
 
 const fetchFn = async (page) => {
+  // 로그인안했으면 fetch x
+  if(!authStore.isAuthenticated){
+    return [];
+  }
+
   try {
     startLoading();
     const { data } = await getNotifications(page);
+    if (page === 1) {
+      notificationStore.setNotifications(data.data.content); // 초기화
+    } else {
+      notificationStore.appendNotifications(data.data.content); // 추가
+    }
     return data;
   } catch (e) {
-    console.log(e + '알림 목록 로드 실패');
+    console.error('알림 목록 로드 실패', e);
+    return [];
   }
 };
 
 const {
-  items: notifications,
   isLastPage,
   reset,
 } = useInfiniteScroll({
@@ -39,8 +52,7 @@ const {
 
 watch(isModalOpenRef, (newVal, oldVal) => {
   if (newVal !== oldVal && newVal === true) {
-    console.log('리셋완료!');
-    reset();
+    clearNotificationBadge();
   }
 });
 </script>
@@ -53,13 +65,13 @@ watch(isModalOpenRef, (newVal, oldVal) => {
         <button class="cancel-button" @click="emit('close')">x</button>
       </div>
       <div class="modal-body">
-        <div v-if="notifications.length === 0" class="empty-message-wrapper">
+        <div v-if="notificationStore.notifications.length === 0" class="empty-message-wrapper">
           <div class="text-gray-400 text-sm text-center py-2">도착한 알림이 없습니다</div>
         </div>
         <div v-else class="body-scroll" ref="scrollContainer">
           <NotificationList
             @close="emit('close')"
-            :notifications="notifications"
+            :notifications="notificationStore.notifications"
             :is-modal-open="isModalOpen"
           />
           <div v-if="isLastPage" class="text-gray-400 text-sm text-center py-2">catchy</div>

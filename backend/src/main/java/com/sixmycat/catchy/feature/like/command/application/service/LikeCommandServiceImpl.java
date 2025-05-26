@@ -36,9 +36,9 @@ public class LikeCommandServiceImpl implements LikeCommandService {
         Long receiverMemberId = resolveReceiverId(targetId, targetType);
         if(!receiverMemberId.equals(memberId)) {
             if (targetType == TargetType.FEED){
-                notificationCommandService.createAndSendNotification(memberId, receiverMemberId, "피드 좋아요 추가되었습니다", NotificationType.FEED_LIKE, targetId);
+                notificationCommandService.createAndSendNotification(memberId, receiverMemberId, "회원님의 피드를 좋아합니다.", NotificationType.FEED_LIKE, targetId);
             } else {
-                notificationCommandService.createAndSendNotification(memberId, receiverMemberId, "쭈르 좋아요 추가되었습니다", NotificationType.JJURE_LIKE, targetId);
+                notificationCommandService.createAndSendNotification(memberId, receiverMemberId, "회원님의 쭈르를 좋아합니다.", NotificationType.JJURE_LIKE, targetId);
             }
         }
 

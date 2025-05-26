@@ -3,6 +3,8 @@ import { computed, ref } from 'vue';
 import { logout as logoutApi, deleteMember as deleteMemberApi } from '@/api/member.js';
 import { useDefaultProfileStore } from '@/stores/defaultProfileStore.js';
 import { showErrorToast } from '@/utills/toast.js';
+import { closeNotificationConnection, subscribeToNotification } from '@/api/notificationSse.js';
+import { useNotificationStore } from '@/stores/notification.js';
 
 export const useAuthStore = defineStore(
   'auth',
@@ -16,12 +18,21 @@ export const useAuthStore = defineStore(
     );
 
     function setAuth(at) {
+
       accessToken.value = at;
       try {
         const payload = JSON.parse(atob(at.split('.')[1]));
         if (!payload.exp) throw new Error('만료 시간 없음');
         expirationTime.value = payload.exp * 1000;
         memberId.value = payload.sub;
+
+        // SSE 알림 구독
+        const notificationStore = useNotificationStore();
+
+        subscribeToNotification((data) => {
+          notificationStore.prependNotification(data);
+        });
+
       } catch (e) {
         accessToken.value = null;
         expirationTime.value = null;
@@ -37,6 +48,7 @@ export const useAuthStore = defineStore(
 
     async function logout() {
       try {
+        closeNotificationConnection();
         await logoutApi();
       } catch (err) {
         showErrorToast('로그아웃이 실패했습니다. 다시 시도해주세요.');

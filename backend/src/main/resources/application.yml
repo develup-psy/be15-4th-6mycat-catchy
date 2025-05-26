@@ -57,6 +57,8 @@ spring:
 
   mvc:
     static-path-pattern: /static/**
+    async:
+      request-timeout: 3600000
 
   security:
     oauth2:
