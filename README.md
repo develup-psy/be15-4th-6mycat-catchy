@@ -62,6 +62,7 @@
 #### [💡 기술 스택](#-기술-스택)  <br>
 #### [📢 프로젝트 설명](#-프로젝트-설명)  <br>
 #### [🔡 요구사항 명세서](#-요구사항-명세서)  <br>
+#### [🔡 REST API 명세서](#-rest-api-명세서서)  <br>
 #### [🙆‍♀️ 서비스 기능](#-서비스-기능)  <br>
 #### [🗃️ DB 모델링](#-db-모델링)  <br>
 #### [🪄 Figma](#-figma)  <br>
@@ -217,6 +218,10 @@
 
 <img src="https://github.com/user-attachments/assets/865d3ab8-f4e3-4100-a330-e73d277c71cd" width="900" />
 
+
+---
+
+## [📟 REST API 명세서](https://docs.google.com/spreadsheets/d/1LiKpL7lfRMg4xijcw1LJebzHuwfKG9ceprzKavaqNMQ/edit?usp=sharing)
 
 ---
 
