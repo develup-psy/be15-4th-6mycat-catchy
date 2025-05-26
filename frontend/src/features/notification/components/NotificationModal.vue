@@ -44,7 +44,6 @@ const fetchFn = async (page) => {
 
 const {
   isLastPage,
-  reset,
 } = useInfiniteScroll({
   fetchFn,
   scrollTargetRef: scrollContainer,
