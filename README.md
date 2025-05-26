@@ -11,9 +11,49 @@
 ## 👨‍💻 DEVELOPERS
 
 
-|<img src="https://github.com/user-attachments/assets/13ac46cc-ef68-414f-bffe-aac5360b5497" width="100" height="100"> |<img src="https://github.com/user-attachments/assets/8bde6eb9-cd10-43eb-a127-8b01752c6e6e" width="100" height="100"> | <img src="https://github.com/user-attachments/assets/8ce1750a-d6df-4048-b2f2-1579bb6c4126" width="100" height="100">|<img src="https://github.com/user-attachments/assets/6436353c-2507-471c-8a02-6493ca0b7846" width="100" height="100"> | <img src="https://github.com/user-attachments/assets/7eec2820-475d-4176-838d-5b8340f33e2c" width="100" height="100"> | <img src="https://github.com/user-attachments/assets/7fac10d0-aec9-4448-836d-b3b6c11b8110" width="100" height="100"> |
-| :------------------------------------: | :-------------------------------------: | :-----------------------------------: | :--------------------------------------: | :-----------------------------------: | :-----------------------------------: |
-| [김기홍](https://github.com/Kihong12) | [김진영](https://github.com/kimjy8937) | [김채원](https://github.com/sezeme) | [박성용](https://github.com/develup-psy?tab=repositories) | [차명호](https://github.com/ckaudgh) | [하채린](https://github.com/didiha) |
+<table>
+  <tr>
+    <td align="center">
+      <img src="https://github.com/user-attachments/assets/13ac46cc-ef68-414f-bffe-aac5360b5497" width="100" height="100">
+    </td>
+    <td align="center">
+      <img src="https://github.com/user-attachments/assets/8bde6eb9-cd10-43eb-a127-8b01752c6e6e" width="100" height="100">
+    </td>
+    <td align="center">
+      <img src="https://github.com/user-attachments/assets/8ce1750a-d6df-4048-b2f2-1579bb6c4126" width="100" height="100">
+    </td>
+    <td align="center">
+      <img src="https://github.com/user-attachments/assets/6436353c-2507-471c-8a02-6493ca0b7846" width="100" height="100">
+    </td>
+    <td align="center">
+      <img src="https://github.com/user-attachments/assets/7eec2820-475d-4176-838d-5b8340f33e2c" width="100" height="100">
+    </td>
+    <td align="center">
+      <img src="https://github.com/user-attachments/assets/7fac10d0-aec9-4448-836d-b3b6c11b8110" width="100" height="100">
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <a href="https://github.com/Kihong12"><b>김기홍</b></a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/kimjy8937"><b>김진영</b></a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/sezeme"><b>김채원</b></a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/develup-psy"><b>박성용</b></a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/ckaudgh"><b>차명호</b></a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/didiha"><b>하채린</b></a>
+    </td>
+  </tr>
+</table>
+
 
 <br>
 
