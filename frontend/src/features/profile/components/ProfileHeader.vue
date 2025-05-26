@@ -19,13 +19,13 @@
 
         <!-- 뱃지 -->
         <div class="flex gap-2 mt-1">
-          <span v-if="user.badges?.topRanker" class="badge bg-pink-300 text-white"
+          <span v-if="user.badges?.topRanker" class="badge bg-pink-400 text-white"
             >🏅 랭킹 1등</span
           >
           <span v-if="user.badges?.influencer" class="badge bg-pink-400 text-white"
-            >⭐ 인증유저</span
+            >⭐ 인플루언서</span
           >
-          <span v-if="user.badges?.birthday" class="badge bg-pink-200 text-white">🎂 생일</span>
+          <span v-if="user.badges?.birthday" class="badge bg-pink-400 text-white">🎂 생일</span>
         </div>
 
         <!-- 상태 메시지 -->
