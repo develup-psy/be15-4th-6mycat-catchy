@@ -2,19 +2,32 @@
   <div class="flex justify-center relative">
     <!-- 🔘 우측 상단 차단 or 차단 해제 버튼 -->
     <button
-      v-if="Number(currentUserId) !== Number(user.member.id)"
-      class="absolute top-1 right-0 text-pink-500 text-sm font-semibold hover:underline"
-      @click="handleBlock"
-    >
-      {{ isBlocked ? '차단 해제' : '🚫 차단' }}
-    </button>
-    <button
       v-if="Number(currentUserId) !== Number(user.member.id) && currentUserId"
-      class="absolute top-7 right-0 text-pink-500 text-sm font-semibold hover:underline"
-      @click="handleFollow"
+      class="absolute top-0 right-0 text-gray-500 text-xl"
+      @click="toggleActionMenu"
     >
-      {{ currentIsFollowing ? '팔로잉' : '팔로우' }}
+      ⋯
     </button>
+
+    <div
+      v-if="isActionMenuVisible"
+      class="absolute top-8 right-0 bg-white border rounded-md shadow-md z-10 py-2 w-32"
+    >
+      <button
+        v-if="Number(currentUserId) !== Number(user.member.id)"
+        class="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
+        @click="handleBlockAndClose"
+      >
+        {{ isBlocked ? '차단 해제' : '🚫 차단' }}
+      </button>
+      <button
+        v-if="Number(currentUserId) !== Number(user.member.id)"
+        class="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
+        @click="handleFollowAndClose"
+      >
+        {{ currentIsFollowing ? '팔로잉' : '팔로우' }}
+      </button>
+    </div>
 
     <div v-if="user?.member" class="flex items-start gap-6 mb-4 -translate-x-12">
       <!-- 프로필 이미지 -->
@@ -92,6 +105,7 @@ const isVisibleFollowModal = ref(false);
 const isBlocked = ref(false);
 
 const currentIsFollowing = ref(user.isFollowing);
+const isActionMenuVisible = ref(false);
 
 function handleGetFollower() {
   isFollowing.value = false;
@@ -150,6 +164,24 @@ const handleFollow = async () => {
     showSuccessToast(currentIsFollowing.value ? '팔로우 완료!' : '팔로우 취소 완료!');
   }
 }
+
+const toggleActionMenu = () => {
+  isActionMenuVisible.value = !isActionMenuVisible.value;
+};
+
+const closeActionMenu = () => {
+  isActionMenuVisible.value = false;
+};
+
+const handleBlockAndClose = async () => {
+  await handleBlock();
+  closeActionMenu();
+};
+
+const handleFollowAndClose = async () => {
+  await handleFollow();
+  closeActionMenu();
+};
 
 </script>
 
