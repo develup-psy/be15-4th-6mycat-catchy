@@ -21,7 +21,7 @@ const SOCIAL_LABELS = {
 const socialLabel = computed(() => SOCIAL_LABELS[social.value] || social.value);
 
 const formattedContactNumber = computed(() =>
-  contactNumber.value ? contactNumber.value.replace(/^(\d{3})(\d{4})(\d{4})$/, '$1-$2-$3') : '',
+    contactNumber.value ? contactNumber.value.replace(/^(\d{3})(\d{4})(\d{4})$/, '$1-$2-$3') : '',
 );
 
 onMounted(async () => {
@@ -44,7 +44,7 @@ onMounted(async () => {
 <template>
   <div class="background">
     <div class="header-frame">
-      <span class="header-text">회원 정보</span>
+      <span class="text-headline-md font-bold mb-6">회원 정보</span>
     </div>
     <MemberInfoItem title="이름" :content="name" />
     <MemberInfoItem title="전화번호" :content="formattedContactNumber" />
@@ -60,7 +60,7 @@ onMounted(async () => {
 .background {
   background-color: #ffffff;
   height: auto;
-  width: 565px;
+  width: 450px;
   filter: drop-shadow(0px 4px 12px rgba(0, 0, 0, 0.04));
   border-radius: 12px;
   padding: 25px;
@@ -74,14 +74,5 @@ onMounted(async () => {
   width: auto;
   display: flex;
   flex-direction: column;
-}
-
-.header-text {
-  color: #1e1e1e;
-  text-align: left;
-  font-size: 24px;
-  line-height: 1.5;
-  font-weight: bold;
-  width: auto;
 }
 </style>

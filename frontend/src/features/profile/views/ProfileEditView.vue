@@ -25,7 +25,6 @@ const imageSrc = computed(() => {
   return url && typeof url === 'string' && url.trim() !== '' ? url : undefined;
 });
 
-
 onMounted(async () => {
   try {
     const res = await fetchMyProfile();
@@ -37,12 +36,14 @@ onMounted(async () => {
 
     if (member.profileImage) {
       imageUrl.value = member.profileImage.startsWith('http')
-        ? member.profileImage
-        : `${import.meta.env.VITE_API_URL}${member.profileImage}`;
+          ? member.profileImage
+          : `${import.meta.env.VITE_API_URL}${member.profileImage}`;
     }
 
     imageFileName.value = member.profileImage;
     cats.value = res.cats || [];
+
+    console.log('🐾 초기 cats 배열:', cats.value);
   } catch (e) {
     toast.error('프로필 불러오기 실패');
     console.error('❌ 프로필 불러오기 실패:', e);
@@ -74,12 +75,17 @@ function handleImageChange(event) {
 }
 
 function handleAddCat(cat) {
+  console.log('➕ handleAddCat called, editIndex:', editIndex.value, 'cat:', cat);
+
   if (editIndex.value !== null) {
     cats.value[editIndex.value] = cat;
     editIndex.value = null;
   } else {
     cats.value.push(cat);
   }
+
+  console.log('🐾 업데이트된 cats 배열:', cats.value);
+
   showCatModal.value = false;
 }
 
@@ -87,9 +93,12 @@ function handleDeleteCat(cat) {
   if (!cat || !cat.id) return;
   cats.value = cats.value.filter((c) => c.id !== cat.id);
   deletedCatIds.value.push(cat.id);
+
+  console.log('❌ 삭제 후 cats 배열:', cats.value);
 }
 
 function openEditCat(index) {
+  console.log('🛠 openEditCat 호출됨: index =', index, ', cat =', cats.value[index]);
   editIndex.value = index;
   showCatModal.value = true;
 }
@@ -104,7 +113,6 @@ async function saveProfile() {
       statusMessage: statusMessage.value,
       cats: existingCats,
     };
-    console.log(2);
     const formData = new FormData();
     formData.append('request', new Blob([JSON.stringify(payload)], { type: 'application/json' }));
 
@@ -112,18 +120,16 @@ async function saveProfile() {
       formData.append('imageFile', imageFile.value);
     }
 
-    console.log(3);
-    console.log('API URL:', import.meta.env.VITE_API_URL);
-    console.log('formData entries:', [...formData.entries()]);
+    console.log('📦 formData entries:', [...formData.entries()]);
 
     await axios.patch('/profiles/me', formData, {
       headers: { 'Content-Type': 'multipart/form-data' },
     });
-    console.log(4);
+
     for (const cat of newCats) {
       await addNewCat(cat);
     }
-    console.log(5);
+
     for (const catId of deletedCatIds.value) {
       await deleteCat(catId);
     }
@@ -139,93 +145,102 @@ async function saveProfile() {
 <template>
   <div class="flex min-h-screen bg-gray-50 font-sans">
     <ProfileMenu />
-    <div class="w-full max-w-md mx-auto px-4 py-10">
-      <div class="flex">
-        <section class="flex-1 bg-white p-8 rounded-xl shadow-sm">
-          <h1 class="text-headline-md font-bold mb-6">프로필 수정</h1>
+    <div class="flex-1 p-8 flex justify-center items-start">
+      <div class="background">
+        <h1 class="text-headline-md font-bold mb-6">프로필 수정</h1>
 
-          <!-- 프로필 이미지 -->
-          <div class="flex flex-col items-center mb-6">
-            <DefaultProfile :src="imageSrc" :size="96" class="mb-2" />
-            <input
+        <!-- 프로필 이미지 -->
+        <div class="flex flex-col items-center mb-6">
+          <DefaultProfile :src="imageSrc" :size="96" class="mb-2" />
+          <input
               ref="imageInput"
               type="file"
               accept="image/*"
               class="hidden"
               @change="handleImageChange"
-            />
-            <button
+          />
+          <button
               @click="triggerImageUpload"
               class="bg-primary-light text-primary text-sm font-semibold px-3 py-1 rounded-full"
-            >
-              이미지 변경
-            </button>
-          </div>
+          >
+            이미지 변경
+          </button>
+        </div>
 
-          <!-- 입력 필드 -->
-          <div class="space-y-4">
-            <div>
-              <label class="block text-sm text-gray-600 mb-1">닉네임</label>
-              <input
+        <!-- 입력 필드 -->
+        <div class="space-y-4">
+          <div>
+            <label class="block text-sm text-gray-600 mb-1">닉네임</label>
+            <input
                 v-model="nickname"
                 class="w-full border rounded px-3 py-2 text-sm"
                 placeholder="닉네임 수정"
-              />
-            </div>
+            />
+          </div>
 
-            <div>
-              <label class="block text-sm text-gray-600 mb-1">상태 메시지</label>
-              <input
+          <div>
+            <label class="block text-sm text-gray-600 mb-1">상태 메시지</label>
+            <input
                 v-model="statusMessage"
                 class="w-full border rounded px-3 py-2 text-sm"
                 placeholder="상태 메시지를 입력하세요"
-              />
-            </div>
+            />
+          </div>
 
-            <!-- 고양이 리스트 -->
-            <div>
-              <label class="block text-sm text-gray-600 mb-1">고양이</label>
-              <div class="space-y-2">
-                <div
+          <!-- 고양이 리스트 -->
+          <div>
+            <label class="block text-sm text-gray-600 mb-1">고양이</label>
+            <div class="space-y-2">
+              <div
                   v-for="(cat, index) in cats"
                   :key="index"
                   @click="openEditCat(index)"
                   class="w-full border rounded px-3 py-2 text-sm text-gray-800 bg-white cursor-pointer hover:bg-gray-50"
-                >
-                  {{ cat.name }}
-                </div>
+              >
+                {{ cat.name }}
+              </div>
 
-                <button
+              <button
                   @click="openAddCat"
                   class="text-primary border border-primary px-3 py-1 text-sm rounded"
-                >
-                  고양이 추가
-                </button>
-              </div>
+              >
+                고양이 추가
+              </button>
             </div>
           </div>
+        </div>
 
-          <div class="mt-6 text-right">
-            <button
+        <div class="mt-6 text-right">
+          <button
               @click="saveProfile"
               class="bg-primary text-white px-6 py-2 rounded font-semibold text-sm hover:bg-primary-hover"
-            >
-              저장하기
-            </button>
-          </div>
-        </section>
+          >
+            저장하기
+          </button>
+        </div>
       </div>
     </div>
 
     <!-- 고양이 등록/수정 모달 -->
     <CatFormModal
-      :visible="showCatModal"
-      @close="showCatModal = false"
-      @submit="handleAddCat"
-      @delete="handleDeleteCat"
-      :initial-cat="editIndex !== null ? cats[editIndex] : null"
+        :visible="showCatModal"
+        @close="showCatModal = false"
+        @submit="handleAddCat"
+        @delete="handleDeleteCat"
+        :initial-cat="editIndex !== null ? cats[editIndex] : null"
     />
   </div>
 </template>
 
-<style scoped></style>
+<style>
+.background {
+  background-color: #ffffff;
+  width: 450px;
+  filter: drop-shadow(0px 4px 12px rgba(0, 0, 0, 0.04));
+  border-radius: 12px;
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+</style>

@@ -3,17 +3,17 @@
     <ProfileMenu />
     <router-view />
 
-    <div class="flex-1 p-6">
+    <div class="flex-1 p-8">
       <!-- ✅ 로딩 중 -->
       <div v-if="!user" class="flex justify-center">
-        <div class="bg-white border rounded-xl shadow-sm p-10 max-w-xl w-full text-center">
-          <p class="text-gray-400">프로필 정보를 불러오는 중...</p>
+        <div class="background">
+          <p class="text-gray-400 text-center">프로필 정보를 불러오는 중...</p>
         </div>
       </div>
 
       <!-- ✅ 유저 데이터가 있을 때 -->
       <div v-else class="flex justify-center">
-        <div class="w-full max-w-md bg-white border rounded-xl shadow-sm p-10">
+        <div class="background">
           <!-- 프로필 헤더 -->
           <ProfileHeader :user="user" />
 
@@ -59,9 +59,24 @@ onMounted(() => {
   loadProfile();
 });
 </script>
+
 <style>
+.background {
+  background-color: #ffffff;
+  height: auto;
+  width: 450px;
+  filter: drop-shadow(0px 4px 12px rgba(0, 0, 0, 0.04));
+  border-radius: 12px;
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
 .thumbnail-list {
-  @apply overflow-y-auto flex flex-wrap;
+  overflow-y: auto;
+  display: flex;
+  flex-wrap: wrap;
   -ms-overflow-style: none;
 }
 
