@@ -5,6 +5,8 @@ import { getNotifications } from '@/api/notification.js';
 import { startLoading } from '@/composable/useLoadingBar.js';
 import { useInfiniteScroll } from '@/composable/useInfiniteScroll.js';
 import { useNotificationStore } from '@/stores/notification.js';
+import { showErrorToast } from '@/utills/toast.js';
+import { useAuthStore } from '@/stores/auth.js';
 
 const props = defineProps({
   isModalOpen: {
@@ -17,15 +19,21 @@ const isModalOpenRef = toRef(props, 'isModalOpen');
 const emit = defineEmits(['close']);
 const scrollContainer = ref(null);
 const notificationStore = useNotificationStore();
+const authStore = useAuthStore();
 
 const fetchFn = async (page) => {
+  // 로그인안했으면 fetch x
+  if(!authStore.isAuthenticated){
+    return [];
+  }
+
   try {
     startLoading();
     const { data } = await getNotifications(page);
     if (page === 1) {
-      notificationStore.setNotifications(data); // 초기화
+      notificationStore.setNotifications(data.data.content); // 초기화
     } else {
-      notificationStore.appendNotifications(data); // 추가
+      notificationStore.appendNotifications(data.data.content); // 추가
     }
     return data;
   } catch (e) {

@@ -3,6 +3,7 @@ import { ref, toRef, computed, watch } from 'vue';
 import { showSuccessToast } from '@/utills/toast.js';
 import { requestFollow, unfollow } from '@/api/follow.js';
 import DefaultProfile from '@/components/defaultProfile/DefaultProfile.vue';
+import { useRouter } from 'vue-router';
 
 const props = defineProps({
   notification: {
