@@ -27,8 +27,18 @@ export function subscribeToNotification(onMessageCallback) {
     console.log('✅ SSE 연결됨');
   };
 
-  eventSource.onmessage = (event) => {
+  eventSource.addEventListener('ping', (event) => {
+    console.log('ping 이벤트 받음:', event.data);
+  });
+
+  eventSource.addEventListener('initial-connect', (event) => {
+    console.log(event.data);
+  })
+
+  eventSource.addEventListener('sse', (event) => {
     try {
+      console.log(event.data);
+
       const data = JSON.parse(event.data);
       const id = event.lastEventId || event.id;
       if (id) localStorage.setItem('lastEventId', id);
@@ -36,12 +46,11 @@ export function subscribeToNotification(onMessageCallback) {
       console.log('📩 알림 수신:', data);
       onMessageCallback(data);
       // 여기에 toast, 알림 UI, store 업데이트 등 연결
-      console.log(data);
       showNotificationToast(data.senderNickname + '님이 ' + data.content);
     } catch (err) {
       console.error('❌ 알림 파싱 실패:', err);
     }
-  };
+  });
 
   eventSource.onerror = (err) => {
     console.error('❌ SSE 연결 오류:', err);

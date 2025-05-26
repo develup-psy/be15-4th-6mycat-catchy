@@ -48,13 +48,6 @@ const {
   fetchFn,
   scrollTargetRef: scrollContainer,
 });
-
-watch(isModalOpenRef, (newVal, oldVal) => {
-  if (newVal !== oldVal && newVal === true) {
-    console.log('리셋완료!');
-    reset(); // todo : 실시간으로 알림을 받아오면 reset 할 필요가 없음
-  }
-});
 </script>
 
 <template>
