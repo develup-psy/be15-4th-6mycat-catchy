@@ -1,5 +1,7 @@
 package com.sixmycat.catchy.feature.member;
 
+import com.sixmycat.catchy.common.s3.S3Uploader;
+import com.sixmycat.catchy.common.s3.dto.S3UploadResult;
 import com.sixmycat.catchy.exception.BusinessException;
 import com.sixmycat.catchy.exception.ErrorCode;
 import com.sixmycat.catchy.feature.member.command.application.dto.request.UpdateCatRequest;
@@ -31,6 +33,9 @@ class MemberCommandServiceTest {
     @Mock
     private MemberRepository memberRepository;
 
+    @Mock
+    private S3Uploader s3Uploader;
+
     @InjectMocks
     private MemberCommandServiceImpl memberCommandService;
 
@@ -55,42 +60,75 @@ class MemberCommandServiceTest {
         ReflectionTestUtils.setField(cat, "member", member);
     }
 
-//    @Test
-//    @DisplayName("프로필, 고양이 정보 수정")
-//    void updateProfile_success() {
-//        // given
-//        UpdateCatRequest catRequest = new UpdateCatRequest(
-//                1L,
-//                "모카",
-//                "F",
-//                "러시안블루",
-//                LocalDate.of(2019, 4, 20),
-//                5
-//        );
-//
-//        UpdateProfileRequest request = new UpdateProfileRequest(
-//                "새로운닉",
-//                "새로운상태",
-//                "new.png",
-//                List.of(catRequest)
-//        );
-//
-//        given(memberRepository.findById(1L)).willReturn(Optional.of(member));
-//
-//        // when
-//        MultipartFile mockImage = mock(MultipartFile.class);
-//        given(mockImage.isEmpty()).willReturn(true); // 이미지 없이 저장하는 테스트라면
-//
-//        UpdateProfileResponse response = memberCommandService.updateProfile(1L, request, mockImage);
-//
-//
-//        // then
-//        assertThat(response.getMemberId()).isEqualTo(1L);
-//        assertThat(response.getNickname()).isEqualTo("새로운닉");
-//        assertThat(response.getStatusMessage()).isEqualTo("새로운상태");
-//        assertThat(response.getProfileImage()).isEqualTo("new.png");
-//        assertThat(response.getCats().get(0).getName()).isEqualTo("모카");
-//    }
+    @Test
+    @DisplayName("프로필, 고양이 정보 수정 - 이미지 없이")
+    void updateProfile_success_withoutImage() {
+        // given
+        Member member = new Member("기존닉", "기존상태", "old.png");
+        ReflectionTestUtils.setField(member, "id", 1L);
+
+        Cat cat = new Cat("모카", "F", "러시안블루", LocalDate.of(2019, 4, 20), 5, member);
+        ReflectionTestUtils.setField(cat, "id", 1L);
+        member.addCat(cat);  // 연관관계 추가
+
+        UpdateCatRequest catRequest = new UpdateCatRequest(
+                1L, "모카", "F", "러시안블루", LocalDate.of(2019, 4, 20), 6
+        );
+
+        UpdateProfileRequest request = new UpdateProfileRequest(
+                "새로운닉", "새로운상태", "new.png", List.of(catRequest)
+        );
+
+        given(memberRepository.findById(1L)).willReturn(Optional.of(member));
+
+        // when
+        MultipartFile mockImage = mock(MultipartFile.class);
+        given(mockImage.isEmpty()).willReturn(true);
+
+        UpdateProfileResponse response = memberCommandService.updateProfile(1L, request, mockImage);
+
+        // then
+        assertThat(response.getMemberId()).isEqualTo(1L);
+        assertThat(response.getNickname()).isEqualTo("새로운닉");
+        assertThat(response.getStatusMessage()).isEqualTo("새로운상태");
+        assertThat(response.getProfileImage()).isEqualTo("old.png"); // 이미지 업로드 안 했으니 기존 값 유지
+        assertThat(response.getCats().get(0).getName()).isEqualTo("모카");
+        assertThat(response.getCats().get(0).getAge()).isEqualTo(6); // 업데이트된 값 확인
+    }
+
+    @Test
+    @DisplayName("프로필, 고양이 정보 수정 - 이미지 포함")
+    void updateProfile_success_withImage() {
+        // given
+        UpdateCatRequest catRequest = new UpdateCatRequest(
+                1L, "모카", "F", "러시안블루", LocalDate.of(2019, 4, 20), 6
+        );
+
+        UpdateProfileRequest request = new UpdateProfileRequest(
+                "새로운닉", "새로운상태", null, List.of(catRequest)
+        );
+
+        S3UploadResult mockResult = mock(S3UploadResult.class);
+        given(mockResult.url()).willReturn("uploaded-image-url.png");
+
+        given(memberRepository.findById(1L)).willReturn(Optional.of(member)); // ✅ this.member 사용
+        given(s3Uploader.uploadFile(any(MultipartFile.class), eq("profile")))
+                .willReturn(mockResult);
+
+        MultipartFile mockImage = mock(MultipartFile.class);
+        given(mockImage.isEmpty()).willReturn(false);
+
+        // when
+        UpdateProfileResponse response = memberCommandService.updateProfile(1L, request, mockImage);
+
+        // then
+        assertThat(response.getMemberId()).isEqualTo(1L);
+        assertThat(response.getNickname()).isEqualTo("새로운닉");
+        assertThat(response.getStatusMessage()).isEqualTo("새로운상태");
+        assertThat(response.getProfileImage()).isEqualTo("uploaded-image-url.png");
+        assertThat(response.getCats().get(0).getName()).isEqualTo("모카");
+        assertThat(response.getCats().get(0).getAge()).isEqualTo(6);
+    }
 
     @Test
     @DisplayName("해당 ID의 사용자가 없으면 예외를 던진다")

@@ -1,6 +1,7 @@
 package com.sixmycat.catchy.feature.member.command.domain.aggregate;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
