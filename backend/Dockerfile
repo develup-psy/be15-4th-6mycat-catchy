@@ -18,10 +18,12 @@ FROM openjdk:17
 # 빌드 스테이지에서 생성된 JAR 파일을 복사한다.
 COPY --from=build /app/build/libs/*.jar ./
 
+# plain이 아닌 JAR을 app.jar로 변경
 RUN mv $(ls *.jar | grep -v plain) app.jar
 
-# app.jar를 리눅스 환경에서 실행하여 스프링 부트 서버를 시작한다.
-# db 접속 되었는지부터 확인하고 실행
+# wait-for-it.sh 스크립트를 복사하고 실행 권한 부여
 COPY wait-for-it.sh /wait-for-it.sh
-RUN dos2unix /wait-for-it.sh
+RUN chmod +x /wait-for-it.sh
+
+# DB가 준비될 때까지 대기 후 Spring Boot 애플리케이션 실행
 ENTRYPOINT ["./wait-for-it.sh", "db:3306", "--", "java", "-jar", "app.jar"]
