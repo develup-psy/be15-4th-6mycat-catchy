@@ -5,7 +5,6 @@ import { getNotifications } from '@/api/notification.js';
 import { startLoading } from '@/composable/useLoadingBar.js';
 import { useInfiniteScroll } from '@/composable/useInfiniteScroll.js';
 import { useNotificationStore } from '@/stores/notification.js';
-import { showErrorToast } from '@/utills/toast.js';
 import { useAuthStore } from '@/stores/auth.js';
 
 const props = defineProps({
