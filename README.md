@@ -62,7 +62,7 @@
 #### [💡 기술 스택](#-기술-스택)  <br>
 #### [📢 프로젝트 설명](#-프로젝트-설명)  <br>
 #### [🔡 요구사항 명세서](#-요구사항-명세서)  <br>
-#### [📟 REST API 명세서](#-rest-api-명세서서)  <br>
+#### [📟 REST API 명세서](#-rest-api-명세서)  <br>
 #### [🙆‍♀️ 서비스 기능](#-서비스-기능)  <br>
 #### [🗃️ DB 모델링](#-db-모델링)  <br>
 #### [📈 플로우 차트](#-플로우-차트)  <br>
@@ -125,36 +125,28 @@
 
 ## 🙆‍♀️ 서비스 기능
 
-
 <details>
   <summary><strong>1. 소셜 로그인</strong></summary>
-
 - 구글
 - 카카오
 - 네이버
-
 </details>
 
 <details>
   <summary><strong>2. 유저</strong></summary>
-
 - 유저 차단 기능  
 - 프로필 관리  
 - 회원 탈퇴  
-
 </details>
 
 <details>
   <summary><strong>3. 팔로우 팔로잉 기능</strong></summary>
-
 - 유저 팔로우/언팔로우  
 - 팔로워 / 팔로잉 목록 보기  
-
 </details>
 
 <details>
   <summary><strong>4. 고양이 커뮤니티 - SNS 기반 게시판</strong></summary>
-
 - 게시글 작성 (사진 없는 글 등록 불가)  
 - 댓글 & 대댓글 (self join or depth 컬럼 활용)  
 - 좋아요 (Redis Set으로 빠른 확인)  
@@ -162,55 +154,47 @@
 - 내 글/댓글 보기  
 - 무한스크롤 (Cursor 기반, createdAt+id)    
 - 최대 사진 5장 업로드 제한  
-
+  
 **심화 기술**  
   - 유저별 활동량(글/댓글 수) 분석  
   - 이미지 리사이징 + webp 변환  
   - S3 + CloudFront  
   - AI로 고양이 사진 판별  
-
 </details>
 
 <details>
   <summary><strong>5. 알림</strong></summary>
-
 - SSE 기반 알림  
   - 내 글에 댓글/좋아요 → 실시간 알림  
 - 고양이 생일 알림  
-
 </details>
 
 <details>
   <summary><strong>6. 30초 릴스 공유</strong></summary>
-
 - 릴스 업로드 (프론트 → S3 직업로드)  
 - 배경음악 선택 (Spotify API 사용)  
 - 썸네일 자동 생성 (FFmpeg, Async or Batch)  
 - 좋아요 / 댓글  
 - 공유 기능 (URL 복사, SNS 버튼)
 - 내 릴스 관리  
-
 </details>
 
 <details>
   <summary><strong>7. 게임</strong></summary>
-
+  
 **고양이 카드 맞추기 게임**  
 - 카드 뒤집기  
 - 쌍 맞추기 (시간 제한 or 시도 횟수)  
 - 랭킹 보기 / 다시 도전  
 - 이미지 커스터마이징 (자가 등록한 고양이 사진 기반 카드 구성)  
 
-
 </details>
 
 <details>
   <summary><strong>8. 유저 활동량 분석</strong></summary>
-
 - 조회수  
 - 좋아요 수  
 - 댓글 수  
-
 </details>
 
 ---
