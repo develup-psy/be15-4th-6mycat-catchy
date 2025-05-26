@@ -20,9 +20,25 @@ spec:
             - containerPort: 3306
           env:
             - name: MYSQL_ROOT_PASSWORD
-              value: "swcamp"
+              valueFrom:
+                secretKeyRef:
+                  name: catchy-secret
+                  key: ROOT_PASSWORD
             - name: MYSQL_DATABASE
-              value: "6mycat"
+              valueFrom:
+                configMapKeyRef:
+                  name: catchy-config
+                  key: DB_NAME
+            - name: MYSQL_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: catchy-config
+                  key: DB_USERNAME
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: catchy-secret
+                  key: DB_PASSWORD
           volumeMounts:
             - name: data-volume
               mountPath: /var/lib/mysql
