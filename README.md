@@ -18,21 +18,17 @@
 
 ## 📜 목차
 
-#### [💡 Tech Stack](#tech-stack)  
-#### [📢 프로젝트 설명](#프로젝트-설명)  
-#### [🙆‍♀️ 서비스 기능](#서비스-기능)  
-#### [🗃️ DB 모델링](#db-모델링)  
-#### [🪄 Figma](#figma)  
-#### [🛜 CI/CD 프로젝트 아키텍처](#cicd-프로젝트-아키텍처)  
-#### [🚩 젠킨스 파이프라인 파일 스크립트 코드](#젠킨스-파이프라인-파일-스크립트-코드)  
-#### [📱 CI/CD 테스트](#cicd-테스트)  
-#### [🍪 개인 회고록](#개인-회고록)  
+#### [💡 기술 스택](#-기술-스택택)  <br>
+#### [📢 프로젝트 설명](#-프로젝트-설명)  <br>
+#### [🙆‍♀️ 서비스 기능](#-서비스-기능)  <br>
+#### [🗃️ DB 모델링](#-db-모델링)  <br>
+#### [🪄 Figma](#-figma)  <br>
+#### [🛜 CI/CD 프로젝트 아키텍처](#-cicd-프로젝트-아키텍처)  <br>
+#### [🚩 젠킨스 파이프라인 파일 스크립트 코드](#-젠킨스-파이프라인-파일-스크립트-코드)  <br>
+#### [📱 CI/CD 테스트](#-cicd-테스트)  <br>
+#### [🍪 개인 회고록](#-개인-회고록)  <br>
 
-
-
-<br>
-
-## 💡 Tech Stack
+## 💡 기술 스택
 ### 🌿 Backend
 ![Spring](https://img.shields.io/badge/Spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white)
 ![Spring Boot](https://img.shields.io/badge/Spring_Boot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white)
