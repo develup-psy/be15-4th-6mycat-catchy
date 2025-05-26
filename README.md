@@ -62,9 +62,10 @@
 #### [💡 기술 스택](#-기술-스택)  <br>
 #### [📢 프로젝트 설명](#-프로젝트-설명)  <br>
 #### [🔡 요구사항 명세서](#-요구사항-명세서)  <br>
-#### [🔡 REST API 명세서](#-rest-api-명세서서)  <br>
+#### [📟 REST API 명세서](#-rest-api-명세서서)  <br>
 #### [🙆‍♀️ 서비스 기능](#-서비스-기능)  <br>
 #### [🗃️ DB 모델링](#-db-모델링)  <br>
+#### [📈 플로우 차트](#-플로우-차트)  <br>
 #### [🪄 Figma](#-figma)  <br>
 #### [🛜 CI/CD 프로젝트 아키텍처](#-cicd-프로젝트-아키텍처)  <br>
 #### [🚩 젠킨스 파이프라인 파일 스크립트 코드](#-젠킨스-파이프라인-파일-스크립트-코드)  <br>
@@ -229,6 +230,12 @@
 
 
 <img src="https://github.com/user-attachments/assets/b06c9bc7-b80e-41bd-a8af-68afb1cfd843" width="900" />
+
+---
+
+## 📈 플로우 차트
+
+<img src="https://github.com/user-attachments/assets/b95b01af-d230-4a2d-b2e1-c338213c965a" />
 
 ---
 
