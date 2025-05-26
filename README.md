@@ -174,7 +174,6 @@
 
 ## 🗃️ DB 모델링
 
-🔗 [DB 모델링]
 
 <img src="https://github.com/user-attachments/assets/b06c9bc7-b80e-41bd-a8af-68afb1cfd843" width="900" />
 
@@ -182,7 +181,6 @@
 
 ## 🪄 Figma
 
-🔗 [Figma 디자인]
 
 <table>
   <tr>
