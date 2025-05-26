@@ -221,7 +221,7 @@
 
 ---
 
-## [📟 REST API 명세서](https://docs.google.com/spreadsheets/d/1LiKpL7lfRMg4xijcw1LJebzHuwfKG9ceprzKavaqNMQ/edit?usp=sharing)
+## [📟 REST API 명세서](https://docs.google.com/spreadsheets/d/1LiKpL7lfRMg4xijcw1LJebzHuwfKG9ceprzKavaqNMQ/edit?gid=1844885263#gid=1844885263&range=A1:L45)
 
 ---
 
