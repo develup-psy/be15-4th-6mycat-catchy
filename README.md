@@ -82,6 +82,8 @@
 ![JWT](https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=JSON%20web%20tokens&logoColor=white)
 ![Hibernate](https://img.shields.io/badge/Hibernate-59666C?style=for-the-badge&logo=hibernate&logoColor=white)
 ![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
+![Mybatis](https://img.shields.io/badge/Mybatis-555555?style=for-the-badge)
+![SSE](https://img.shields.io/badge/SSE-1572B6?style=for-the-badge)
 
 ### 🌿 Frontend
 ![Vue.js](https://img.shields.io/badge/Vue.js-4FC08D?style=for-the-badge&logo=vue.js&logoColor=white)
@@ -90,16 +92,19 @@
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
 ![Axios](https://img.shields.io/badge/Axios-5A29E4?style=for-the-badge)
 ![Vue Router](https://img.shields.io/badge/Vue_Router-4FC08D?style=for-the-badge)
-![Vuetify](https://img.shields.io/badge/Vuetify-1867C0?style=for-the-badge)
+![Pinia](https://img.shields.io/badge/Pinia-F7DF1E?style=for-the-badge&logo=pinia&logoColor=black)
+![Tailwind](https://img.shields.io/badge/Tailwind-2496ED?style=for-the-badge&logo=Tailwind&logoColor=white)
+![ToastUi](https://img.shields.io/badge/ToastUi-2496ED?style=for-the-badge&logo=toastui&logoColor=white)
 
 ### 🗃️ Database
 ![MariaDB](https://img.shields.io/badge/MariaDB-003545?style=for-the-badge&logo=mariadb&logoColor=white)
 ![Redis](https://img.shields.io/badge/Redis-DC382D?style=for-the-badge&logo=redis&logoColor=white)
+![Amazon S3](https://img.shields.io/badge/Amazon_S3-569A31?style=for-the-badge&logo=amazonaws&logoColor=white)
 
-### ☁️ AWS
+### ☁️ Devops
 ![AWS](https://img.shields.io/badge/AWS-232F3E?style=for-the-badge&logo=amazonaws&logoColor=white)
 ![Kubernetes](https://img.shields.io/badge/Kubernetes-326CE5?style=for-the-badge&logo=kubernetes&logoColor=white)
-![Amazon S3](https://img.shields.io/badge/Amazon_S3-569A31?style=for-the-badge&logo=amazonaws&logoColor=white)
+
 
 ### 🛠️ Tools
 ![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white)
