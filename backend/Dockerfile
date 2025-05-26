@@ -23,5 +23,5 @@ RUN mv $(ls *.jar | grep -v plain) app.jar
 # app.jar를 리눅스 환경에서 실행하여 스프링 부트 서버를 시작한다.
 # db 접속 되었는지부터 확인하고 실행
 COPY wait-for-it.sh /wait-for-it.sh
-RUN chmod +x /wait-for-it.sh
+RUN dos2unix /wait-for-it.sh
 ENTRYPOINT ["./wait-for-it.sh", "db:3306", "--", "java", "-jar", "app.jar"]
