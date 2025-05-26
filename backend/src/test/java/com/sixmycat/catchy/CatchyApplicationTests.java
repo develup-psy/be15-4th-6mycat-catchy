@@ -7,6 +7,7 @@ import org.springframework.test.context.ActiveProfiles;
 @SpringBootTest
 class CatchyApplicationTests {
 
+
 	@Test
 	void contextLoads() {
 	}

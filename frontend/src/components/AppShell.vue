@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onUnmounted, nextTick } from 'vue';
+import { ref, onUnmounted, nextTick, computed } from 'vue';
 import { useUploadStore } from '@/stores/uploadStore';
 import SidebarMainLayout from '@/components/layout/SidebarMainLayout.vue';
 import UploadGuideModal from '@/components/modal/UploadGuideModal.vue';
@@ -17,6 +17,8 @@ import {
   uploadFileToS3,
   uploadThumbnailImage,
 } from '@/api/jjure.js';
+import { useAuthStore } from '@/stores/auth.js'
+
 
 const showUploadGuideModal = ref(false);
 const showJjureUploadModal = ref(false);
@@ -31,6 +33,7 @@ const thumbnailBlob = ref(null); // 썸네일 Blob 저장
 
 const uploadStore = useUploadStore();
 const feedRefreshStore = useFeedRefreshStore();
+const authStore = useAuthStore();
 
 // 파일 선택 핸들러
 async function handleFilesSelected({ existingUrls = [], files = [] }) {
@@ -140,6 +143,15 @@ const handleUpdateThumbnail = (blob) => {
   thumbnailBlob.value = blob;
 };
 
+
+function handleShowNotificationModal() {
+  if(!authStore.isAuthenticated){
+    showErrorToast('로그인이 필요합니다.')
+    return;
+  }
+  showNotificationModal.value = true;
+}
+
 // 메모리 정리
 onUnmounted(() => {
   if (videoUrl.value) {
@@ -153,7 +165,7 @@ onUnmounted(() => {
     <!-- 사이드바 포함 전체 레이아웃 -->
     <SidebarMainLayout
       @open-upload-modal="showUploadGuideModal = true"
-      @open-notification-modal="showNotificationModal = true"
+      @open-notification-modal="handleShowNotificationModal"
     >
       <RouterView />
     </SidebarMainLayout>

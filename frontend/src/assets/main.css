@@ -41,3 +41,26 @@
 .Vue-Toastification__toast--error .Vue-Toastification__toast-body {
     font-size: 13px !important;
 }
+
+.Vue-Toastification__toast--info {
+    background-color: #FF5C8D !important;
+    color: #FFFFFF !important;
+    border-radius: 8px !important;
+    padding: 8px 12px !important;      /* 패딩 작게 */
+    max-width: 320px !important;       /* 최대 너비 제한 */
+    text-align: center;
+    white-space: normal;       /* 줄바꿈 허용 */
+    overflow-wrap: break-word; /* 단어 단위 줄바꿈 허용 */
+    word-break: break-word;    /* 단어가 길 경우 줄바꿈 */
+    line-height: 1.2 !important;       /* 줄 높이 좁게 */
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-height: 32px !important;       /* 높이 줄임 */
+    font-size: 12px !important;        /* 글자 작게 */
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.Vue-Toastification__toast--info .Vue-Toastification__toast-body {
+    font-size: 13px !important;
+}

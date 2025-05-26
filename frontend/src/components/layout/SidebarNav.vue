@@ -5,6 +5,8 @@ import { useAuthStore } from '@/stores/auth';
 import { useDefaultProfileStore } from '@/stores/defaultProfileStore.js';
 import { startLoading, stopLoading } from '@/composable/useLoadingBar.js';
 import DefaultProfile from '@/components/defaultProfile/DefaultProfile.vue';
+import { hasUnreadNotification } from '@/features/notification/utils/notificationBadge';
+import { computed } from 'vue';
 
 const emit = defineEmits(['open-upload-modal', 'open-notification-modal']);
 
@@ -37,6 +39,9 @@ function handleLogout() {
     location.reload();
   });
 }
+
+const showBadge = computed(() => hasUnreadNotification.value);
+
 </script>
 
 <template>
@@ -61,11 +66,17 @@ function handleLogout() {
         <button
           v-else-if="item.type === 'noti-modal'"
           type="button"
-          class="nav-item"
+          class="nav-item relative"
           @click="handleNotificationModal"
         >
           <i :class="item.icon" />
           <span>{{ item.label }}</span>
+
+          <!-- 알림 뱃지 -->
+          <span
+            v-if="showBadge"
+            class="absolute top-1 right-1 w-2.5 h-2.5 rounded-full bg-red-500"
+          ></span>
         </button>
       </li>
     </ul>

@@ -1,0 +1,153 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mariadb-init-sql
+  namespace: default
+data:
+  init.sql: |
+    USE 6mycat;
+
+    DROP TABLE IF EXISTS game_score;
+    DROP TABLE IF EXISTS game_image;
+    DROP TABLE IF EXISTS notification;
+    DROP TABLE IF EXISTS `like`;
+    DROP TABLE IF EXISTS comment;
+    DROP TABLE IF EXISTS feed_image;
+    DROP TABLE IF EXISTS feed;
+    DROP TABLE IF EXISTS block;
+    DROP TABLE IF EXISTS follow;
+    DROP TABLE IF EXISTS cat;
+    DROP TABLE IF EXISTS jjure;
+    DROP TABLE IF EXISTS member;
+
+    CREATE TABLE member (
+                            id BIGINT NOT NULL AUTO_INCREMENT,
+                            email VARCHAR(255) NOT NULL,
+                            name VARCHAR(30),
+                            social VARCHAR(10) NOT NULL,
+                            contact_number VARCHAR(11) NOT NULL,
+                            profile_image VARCHAR(255),
+                            nickname VARCHAR(30) NOT NULL UNIQUE,
+                            status_message VARCHAR(100),
+                            created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                            updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                            deleted_at TIMESTAMP NULL,
+                            PRIMARY KEY (id)
+    );
+
+    CREATE TABLE jjure (
+                           id BIGINT NOT NULL AUTO_INCREMENT,
+                           member_id BIGINT NOT NULL,
+                           caption VARCHAR(100) NOT NULL,
+                           file_key VARCHAR(255) NOT NULL,
+                           thumbnail_url VARCHAR(500),
+                           music_url VARCHAR(255),
+                           created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                           updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                           deleted_at TIMESTAMP,
+                           PRIMARY KEY (id),
+                           CONSTRAINT fk_jjure_member FOREIGN KEY (member_id) REFERENCES member (id) ON DELETE CASCADE
+    );
+
+    CREATE TABLE cat (
+                         id BIGINT NOT NULL AUTO_INCREMENT,
+                         member_id BIGINT NOT NULL,
+                         name VARCHAR(30) NOT NULL,
+                         gender CHAR(1) NOT NULL DEFAULT 'N',
+                         breed VARCHAR(100),
+                         birth_date DATE,
+                         age INT,
+                         created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                         updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                         deleted_at TIMESTAMP,
+                         PRIMARY KEY (id),
+                         FOREIGN KEY (member_id) REFERENCES member(id)
+    );
+
+    CREATE TABLE follow (
+                            id BIGINT AUTO_INCREMENT PRIMARY KEY,
+                            follower_id BIGINT NOT NULL,
+                            following_id BIGINT NOT NULL,
+                            requested_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+                            accepted_at TIMESTAMP NULL,
+                            CONSTRAINT uq_follow UNIQUE (follower_id, following_id),
+                            CONSTRAINT fk_follower FOREIGN KEY (follower_id) REFERENCES member(id),
+                            CONSTRAINT fk_following FOREIGN KEY (following_id) REFERENCES member(id)
+    );
+
+    CREATE TABLE block (
+                           id BIGINT NOT NULL AUTO_INCREMENT,
+                           blocker_id BIGINT NOT NULL,
+                           blocked_id BIGINT NOT NULL,
+                           blocked_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                           PRIMARY KEY (id),
+                           FOREIGN KEY (blocker_id) REFERENCES member(id),
+                           FOREIGN KEY (blocked_id) REFERENCES member(id)
+    );
+
+    CREATE TABLE feed (
+                          id BIGINT NOT NULL AUTO_INCREMENT,
+                          member_id BIGINT NOT NULL,
+                          content VARCHAR(500),
+                          music_url VARCHAR(255),
+                          created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                          updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                          deleted_at TIMESTAMP,
+                          PRIMARY KEY (id),
+                          FOREIGN KEY (member_id) REFERENCES member(id)
+    );
+
+    CREATE TABLE feed_image (
+                                id BIGINT NOT NULL AUTO_INCREMENT,
+                                feed_id BIGINT NOT NULL,
+                                image_url VARCHAR(255) NOT NULL,
+                                sequence INT NOT NULL DEFAULT 0,
+                                PRIMARY KEY (id),
+                                FOREIGN KEY (feed_id) REFERENCES feed(id)
+    );
+
+    CREATE TABLE comment (
+                             id BIGINT NOT NULL AUTO_INCREMENT,
+                             member_id BIGINT NOT NULL,
+                             target_id BIGINT NOT NULL,
+                             target_type ENUM('JJURE', 'FEED') NOT NULL,
+                             parent_comment_id BIGINT,
+                             content VARCHAR(255),
+                             created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                             PRIMARY KEY (id),
+                             FOREIGN KEY (member_id) REFERENCES member(id),
+                             FOREIGN KEY (parent_comment_id) REFERENCES comment(id)
+    );
+
+    CREATE TABLE `like` (
+                            id BIGINT NOT NULL AUTO_INCREMENT,
+                            member_id BIGINT NOT NULL,
+                            target_id BIGINT NOT NULL,
+                            target_type ENUM('JJURE', 'FEED') NOT NULL,
+                            liked_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                            PRIMARY KEY (id),
+                            FOREIGN KEY (member_id) REFERENCES member(id)
+    );
+
+    CREATE TABLE notification (
+                                  id BIGINT NOT NULL AUTO_INCREMENT,
+                                  member_id BIGINT NOT NULL,
+                                  sender_member_id BIGINT NOT NULL,
+                                  related_id BIGINT,
+                                  type VARCHAR(100) NOT NULL,
+                                  content VARCHAR(255),
+                                  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                                  PRIMARY KEY (id),
+                                  FOREIGN KEY (member_id) REFERENCES member(id),
+                                  FOREIGN KEY (sender_member_id) REFERENCES member(id)
+    );
+
+    CREATE TABLE game_score (
+                                id BIGINT NOT NULL AUTO_INCREMENT,
+                                member_id BIGINT NOT NULL,
+                                score INT,
+                                created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                                PRIMARY KEY (id),
+                                CONSTRAINT uq_game_score_member UNIQUE (member_id),
+                                CONSTRAINT fk_game_score_member FOREIGN KEY (member_id) REFERENCES member(id)
+    );
