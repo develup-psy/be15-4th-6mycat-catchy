@@ -220,78 +220,173 @@ pipeline {
     }
 
     environment {
-        GITHUB_URL = 'https://github.com/beyond-SW-Camp-14th-clover/be14-4th-clover-moodiary-BE.git'
+        DOCKERHUB_CREDENTIALS = credentials('DOCKERHUB_PASSWORD')
+        GITHUB_URL = 'https://github.com/be15-six-my-cat/be15-4th-sixmycat-catchy-DEVOPS.git'
     }
 
     stages {
         stage('Preparation') {
             steps {
                 script {
-                    if (isUnix()) {
-                        sh 'docker --version'
-                    } else {
-                        bat 'docker --version'
+                    sh '/opt/homebrew/bin/docker --version'
+                }
+            }
+        }
+
+        stage('Clone Repository') {
+            steps {
+                git branch: 'main', url: "${env.GITHUB_URL}"
+            }
+        }
+
+        stage('Detect Changes') {
+            steps {
+                script {
+                    env.CHANGED_BACKEND = sh(script: "git diff --name-only HEAD HEAD~1 | grep '^backend/' || true", returnStdout: true).trim()
+                    env.CHANGED_FRONTEND = sh(script: "git diff --name-only HEAD HEAD~1 | grep '^frontend/' || true", returnStdout: true).trim()
+                }
+            }
+        }
+
+        stage('Build Backend') {
+            when {
+                expression { return env.CHANGED_BACKEND }
+            }
+            steps {
+                dir('backend') {
+                    script {
+                        sh 'chmod +x ./gradlew'
+                        sh './gradlew clean build -x test'
                     }
                 }
             }
         }
-        stage('Source Build') {
+
+        stage('Build Frontend') {
+            when {
+                expression { return env.CHANGED_FRONTEND }
+            }
+             tools {
+        nodejs '24.1.0'
+                 }
             steps {
-                git branch: 'main', url: "${env.GITHUB_URL}"
-                bat '''
-                    xcopy /B /Y "C:\\workspace\\be14-4th-clover-moodiary-BE\\moodiary\\src\\main\\resources\\application.yml" "moodiary\\src\\main\\resources\\application.yml"
-                '''
-                script {
-                    dir(path: 'moodiary') {
-                        if (isUnix()) {
-                            sh "chmod +x ./gradlew"
-                            sh "./gradlew clean build"
-                        } else {
-                            bat "gradlew.bat clean build"
+                dir('frontend') {
+                    sh 'npm install'
+                    sh 'npm run build'
+                }
+            }
+        }
+
+        stage('Docker Build and Push - Backend') {
+            when {
+                expression { return env.CHANGED_BACKEND }
+            }
+            steps {
+                dir('backend') {
+                    script {
+                        withCredentials([usernamePassword(
+                            credentialsId: 'DOCKERHUB_PASSWORD',
+                            usernameVariable: 'DOCKER_USER',
+                            passwordVariable: 'DOCKER_PASS'
+                        )]) {
+                            sh 'mkdir -p ~/.docker'
+                            sh 'echo "{ \"credsStore\": \"\" }" > ~/.docker/config.json'
+
+                            sh '/opt/homebrew/bin/docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}'
+                            sh '/opt/homebrew/bin/docker build -t ${DOCKER_USER}/k8s-boot:latest .'
+                            sh '/opt/homebrew/bin/docker push ${DOCKER_USER}/k8s-boot:latest'
                         }
                     }
                 }
             }
         }
-        stage('Container Build and Push') {
+
+        stage('Docker Build and Push - Frontend') {
+            when {
+                expression { return env.CHANGED_FRONTEND }
+            }
             steps {
-                script {
-                    dir(path: 'moodiary') {
-                        withCredentials([usernamePassword(credentialsId: 'DOCKERHUB_PASSWORD', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
-                            if (isUnix()) {
-                                sh "docker build -t ${DOCKER_USER}/moodiary-boot:${currentBuild.number} ."
-                                sh "docker build -t ${DOCKER_USER}/moodiary-boot:latest ."
-                                sh "docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}"
-                                sh "docker push ${DOCKER_USER}/moodiary-boot:${currentBuild.number}"
-                                sh "docker push ${DOCKER_USER}/moodiary-boot:latest"
-                            } else {
-                                bat "docker build -t ${DOCKER_USER}/moodiary-boot:${currentBuild.number} ."
-                                bat "docker build -t ${DOCKER_USER}/moodiary-boot:latest ."
-                                bat "docker login -u %DOCKER_USER% -p %DOCKER_PASS%"
-                                bat "docker push ${DOCKER_USER}/moodiary-boot:${currentBuild.number}"
-                                bat "docker push ${DOCKER_USER}/moodiary-boot:latest"
-                            }
+                dir('frontend') {
+                    withCredentials([string(credentialsId: 'KAKAO_JS_KEY', variable: 'KAKAO_KEY')]) {
+                writeFile file: '.env.production', text: """
+VITE_API_URL=http://localhost/boot/api/v1
+VITE_AWS_BUCKET_NAME=be15-4th-catchy-s3-bucket
+VITE_AWS_REGION=ap-northeast-2
+VITE_KAKAO_JAVASCRIPT_KEY=${KAKAO_KEY}
+                """
+            }
+                    script {
+                        withCredentials([usernamePassword(
+                            credentialsId: 'DOCKERHUB_PASSWORD',
+                            usernameVariable: 'DOCKER_USER',
+                            passwordVariable: 'DOCKER_PASS'
+                        )]) {
+                            sh 'mkdir -p ~/.docker'
+                            sh 'echo "{ \"credsStore\": \"\" }" > ~/.docker/config.json'
+
+                            sh '/opt/homebrew/bin/docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}'
+                            sh '/opt/homebrew/bin/docker build -t ${DOCKER_USER}/k8s-vue:latest .'
+                            sh '/opt/homebrew/bin/docker push ${DOCKER_USER}/k8s-vue:latest'
                         }
                     }
                 }
             }
         }
     }
+
     post {
         always {
             script {
-                if (isUnix()) {
-                    sh 'docker logout'
-                } else {
-                    bat 'docker logout'
-                }
+                sh '/opt/homebrew/bin/docker logout || true'
             }
         }
         success {
-            echo 'Pipeline succeeded!'
+            script {
+                def changedParts = []
+                if (env.CHANGED_BACKEND) changedParts << "백엔드"
+                if (env.CHANGED_FRONTEND) changedParts << "프론트엔드"
+                def changeInfo = changedParts ? changedParts.join(", ") : "변경 없음"
+
+                withCredentials([string(credentialsId: 'discord', variable: 'DISCORD')]) {
+                    discordSend(
+                        description: """
+                        **✅ 빌드 성공!**
+
+                        **변경 감지:** ${changeInfo}
+                        **제목:** ${currentBuild.displayName}
+                        **결과:** :white_check_mark: ${currentBuild.currentResult}
+                        **실행 시간:** ${currentBuild.duration / 1000}s
+                        **링크:** [빌드 결과 보기](${env.BUILD_URL})
+                        """,
+                        title: "${env.JOB_NAME} 빌드 성공!",
+                        webhookURL: "$DISCORD"
+                    )
+                }
+            }
         }
-        failure {
-            echo 'Pipeline failed!'
+       failure {
+            script {
+                def changedParts = []
+                if (env.CHANGED_BACKEND) changedParts << "백엔드"
+                if (env.CHANGED_FRONTEND) changedParts << "프론트엔드"
+                def changeInfo = changedParts ? changedParts.join(", ") : "변경 없음"
+
+                withCredentials([string(credentialsId: 'discord', variable: 'DISCORD')]) {
+                    discordSend(
+                        description: """
+                        **❌ 빌드 실패!**
+
+                        **변경 감지:** ${changeInfo}
+                        **제목:** ${currentBuild.displayName}
+                        **결과:** :x: ${currentBuild.currentResult}
+                        **실행 시간:** ${currentBuild.duration / 1000}s
+                        **링크:** [빌드 결과 보기](${env.BUILD_URL})
+                        """,
+                        title: "${env.JOB_NAME} 빌드 실패!",
+                        webhookURL: "$DISCORD"
+                    )
+                }
+            }
         }
     }
 }
