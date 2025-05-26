@@ -2,12 +2,32 @@
   <div class="flex justify-center relative">
     <!-- 🔘 우측 상단 차단 or 차단 해제 버튼 -->
     <button
-      v-if="Number(currentUserId) !== Number(user.member.id)"
-      class="absolute top-4 right-6 text-pink-500 text-sm font-semibold hover:underline"
-      @click="handleBlock"
+      v-if="Number(currentUserId) !== Number(user.member.id) && currentUserId"
+      class="absolute top-0 right-0 text-gray-500 text-xl"
+      @click="toggleActionMenu"
     >
-      {{ isBlocked ? '차단 해제' : '🚫 차단' }}
+      ⋯
     </button>
+
+    <div
+      v-if="isActionMenuVisible"
+      class="absolute top-8 right-0 bg-white border rounded-md shadow-md z-10 py-2 w-32"
+    >
+      <button
+        v-if="Number(currentUserId) !== Number(user.member.id)"
+        class="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
+        @click="handleBlockAndClose"
+      >
+        {{ isBlocked ? '차단 해제' : '🚫 차단' }}
+      </button>
+      <button
+        v-if="Number(currentUserId) !== Number(user.member.id)"
+        class="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
+        @click="handleFollowAndClose"
+      >
+        {{ currentIsFollowing ? '팔로잉' : '팔로우' }}
+      </button>
+    </div>
 
     <div v-if="user?.member" class="flex items-start gap-6 mb-4 -translate-x-12">
       <!-- 프로필 이미지 -->
@@ -29,7 +49,7 @@
         </div>
 
         <!-- 상태 메시지 -->
-        <p class="text-body-sm text-gray-500 mt-1">
+        <p class="text-body-sm text-gray-400 mt-1">
           {{ user.member.statusMessage || '상태메시지가 없습니다.' }}
         </p>
 
@@ -37,12 +57,12 @@
         <div class="flex gap-4 mt-2 text-body-md text-gray-700">
           <span>게시물 {{ user.contents?.feedCount ?? 0 }}</span>
           <span>
-            <button class="follow-button" @click="handleGetFollower">
+            <button class="follow-button" @click="handleGetFollower" :disabled="isOther">
               팔로워 {{ user.follows?.followerCount ?? 0 }}
             </button>
           </span>
           <span>
-            <button class="follow-button" @click="handleGetFollowing">
+            <button class="follow-button" @click="handleGetFollowing" :disabled="isOther">
               팔로잉 {{ user.follows?.followingCount ?? 0 }}
             </button>
           </span>
@@ -53,16 +73,18 @@
 
   <!-- 팔로우 모달 -->
   <template v-if="isVisibleFollowModal">
-    <FollowModal :isFollowing="isFollowing" @close="isVisibleFollowModal = false" />
+    <MyFollowModal :isFollowing="isFollowing" @close="isVisibleFollowModal = false" />
   </template>
 </template>
 
 <script setup>
 import { ref, computed, onMounted } from 'vue';
-import FollowModal from '@/features/follow/components/FollowModal.vue';
+import MyFollowModal from '@/features/follow/components/MyFollowModal.vue';
 import { useAuthStore } from '@/stores/auth.js';
 import { blockUser, unblockUser, fetchBlockedUsers } from '@/api/block.js';
 import DefaultProfile from '@/components/defaultProfile/DefaultProfile.vue';
+import { requestFollow, unfollow } from '@/api/follow.js';
+import { showSuccessToast } from '@/utills/toast.js';
 
 const { user, isOther } = defineProps({
   user: {
@@ -81,6 +103,9 @@ const currentUserId = computed(() => authStore.memberId);
 const isFollowing = ref(false);
 const isVisibleFollowModal = ref(false);
 const isBlocked = ref(false);
+
+const currentIsFollowing = ref(user.isFollowing);
+const isActionMenuVisible = ref(false);
 
 function handleGetFollower() {
   isFollowing.value = false;
@@ -123,6 +148,41 @@ const handleBlock = async () => {
     alert('차단 상태 변경에 실패했습니다.');
   }
 };
+
+const handleFollow = async () => {
+  currentIsFollowing.value = !currentIsFollowing.value;
+
+  try {
+    if(currentIsFollowing.value) {
+      await requestFollow(user.member.id);
+    } else {
+      await unfollow(user.member.id);
+    }
+  } catch (e) {
+    console.log('팔로우 에러', e);
+  } finally {
+    showSuccessToast(currentIsFollowing.value ? '팔로우 완료!' : '팔로우 취소 완료!');
+  }
+}
+
+const toggleActionMenu = () => {
+  isActionMenuVisible.value = !isActionMenuVisible.value;
+};
+
+const closeActionMenu = () => {
+  isActionMenuVisible.value = false;
+};
+
+const handleBlockAndClose = async () => {
+  await handleBlock();
+  closeActionMenu();
+};
+
+const handleFollowAndClose = async () => {
+  await handleFollow();
+  closeActionMenu();
+};
+
 </script>
 
 <style scoped>
@@ -132,5 +192,9 @@ const handleBlock = async () => {
 
 .follow-button {
   @apply hover:text-primary-hover;
+}
+
+.follow-button:disabled {
+  @apply cursor-not-allowed text-gray-400;
 }
 </style>

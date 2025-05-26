@@ -15,7 +15,7 @@ const props = defineProps({
     required: true,
   },
 });
-console.log(props.notification);
+
 const emit = defineEmits(['close']);
 
 const isModalOpenRef = toRef(props, 'isModalOpen');

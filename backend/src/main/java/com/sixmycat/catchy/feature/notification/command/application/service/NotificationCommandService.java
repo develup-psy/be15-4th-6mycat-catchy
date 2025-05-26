@@ -153,7 +153,6 @@ public class NotificationCommandService {
 
     private void sendToClient(String emitterId, SseEmitter emitter, String name, Object data) {
         try {
-            System.out.println("클라이언트로 보내기 직전임");
             emitter.send(SseEmitter.event()
                     .id(emitterId)
                     .name(name)
