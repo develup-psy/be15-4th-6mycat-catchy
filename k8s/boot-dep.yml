@@ -18,6 +18,9 @@ spec:
           imagePullPolicy: Always
           ports:
             - containerPort: 8000
+          env:
+            - name: TZ
+              value: Asia/Seoul
           envFrom:
             - configMapRef:
                 name: catchy-config    # <- ConfigMap 이름
