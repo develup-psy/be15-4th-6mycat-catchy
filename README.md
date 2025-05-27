@@ -763,10 +763,16 @@ pipeline {
 ```
 </details>
 
-## 📱 CI/CD 테스트
+<br>
 
-<img src="https://raw.githubusercontent.com/beyond-SW-Camp-14th-clover/be14-4th-clover-moodiary-Dev/main/image/CICD%ED%85%8C%EC%8A%A4%ED%8A%B8.png" width="900" />
-사진 수정
+## 🚀 CI/CD 테스트
+
+<details>
+  <summary>CI/CD 테스트 보기/숨기기</summary>
+  <div align="center">
+    <img src="./CI,CD 테스트.gif" alt="CI/CD 테스트" width="900" />
+  </div>
+</details>
 
 <br>
 
