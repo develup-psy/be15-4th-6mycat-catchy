@@ -89,7 +89,8 @@
 <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white" />
 <img src="https://img.shields.io/badge/Mybatis-555555?style=for-the-badge" />
 <img src="https://img.shields.io/badge/SSE-1572B6?style=for-the-badge" />
-
+<img src="https://img.shields.io/badge/Rekognition-1572B6?style=for-the-badge" />
+<img src="https://img.shields.io/badge/CloudFront-7D1B7E?style=for-the-badge" />
 </div>
 
 <div align="center">
@@ -121,7 +122,8 @@
 ### ☁️ Devops  
 <img src="https://img.shields.io/badge/AWS-232F3E?style=for-the-badge&logo=amazonaws&logoColor=white" />
 <img src="https://img.shields.io/badge/Kubernetes-326CE5?style=for-the-badge&logo=kubernetes&logoColor=white" />
-
+<img src="https://img.shields.io/badge/Jenkins-DC382D?style=for-the-badge&logo=Jenkins&logoColor=white" />
+<img src="https://img.shields.io/badge/Argo-FF6C37?style=for-the-badge&logo=Argo&logoColor=white" />
 </div>
 
 <div align="center">
