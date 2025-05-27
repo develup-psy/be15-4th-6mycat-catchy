@@ -71,53 +71,7 @@
 #### [📱 CI/CD 테스트](#-cicd-테스트)  <br>
 #### [🍪 개인 회고록](#-개인-회고록)  <br>
 
-
-
-## 📢 프로젝트 소개
-
-### 🐾 **Catchy: 고양이를 사랑하는 사람들을 위한 올인원 커뮤니티 플랫폼**
-
-> **Catchy**는 고양이를 사랑하는 사람들을 위한 SNS 기반 커뮤니티 플랫폼입니다.  
-> 📸 사진과 🎥 릴스 영상 공유, 👥 팔로우, 💬 댓글, ❤️ 좋아요는 물론,  
-> 🕹️ 게임과 🔔 실시간 알림, 🤖 AI 고양이 이미지 판별 기능까지 제공하는 고양이 맞춤형 올인원 웹 서비스입니다.
-
-
-### 🌟 주요 서비스 기능
-
-✅ **회원 관리**  
-- 소셜 로그인/회원가입 (구글, 카카오, 네이버)  
-- 프로필 관리 및 수정 (상태메시지, 고양이 정보)  
-- 회원 탈퇴, 유저 차단  
-
-✅ **팔로우/언팔로우**  
-- 다른 사용자 팔로우 및 팔로잉/팔로워 목록 관리  
-
-✅ **고양이 커뮤니티**  
-- 피드(사진) 및 쭈르(영상) 등록, 수정, 삭제  
-- 해시태그, 무한스크롤, 공유 기능  
-- 댓글 및 대댓글, 좋아요  
-
-✅ **게임**  
-- 고양이 카드 맞추기 게임  
-- 랭킹, 시간·횟수 제한, 개인 카드 커스터마이징  
-
-✅ **알림**  
-- SSE 기반 실시간 알림 (댓글, 좋아요, 팔로우, 생일 알림)  
-- 알림 자동 삭제 (30일 후)  
-
-✅ **AI 이미지 검사**  
-- 등록 사진이 고양이인지 AI가 판별  
-- 비고양이 이미지 등록 시 거부  
-
-
-### 🚀 Catchy가 만드는 가치
-
-> 단순한 반려묘 사진 공유를 넘어,  
-> 집사들끼리 교류하고, 게임으로 즐기며,  
-> AI 기술로 고양이 중심 콘텐츠를 관리하는 **혁신적인 고양이 플랫폼**입니다.  
->  
-> 🐾 **세상 모든 고양이와 집사를 위한 소셜 놀이터, Catchy에서 당신의 고양이 이야기를 들려주세요!**
-
+<br>
 
 ## 💡 기술 스택
 
@@ -181,6 +135,54 @@
 
 </div>
 
+<br>
+
+## 📢 프로젝트 소개
+
+### 🐾 **Catchy: 고양이를 사랑하는 사람들을 위한 올인원 커뮤니티 플랫폼**
+
+> **Catchy**는 고양이를 사랑하는 사람들을 위한 SNS 기반 커뮤니티 플랫폼입니다.  
+> 📸 사진과 🎥 릴스 영상 공유, 👥 팔로우, 💬 댓글, ❤️ 좋아요는 물론,  
+> 🕹️ 게임과 🔔 실시간 알림, 🤖 AI 고양이 이미지 판별 기능까지 제공하는 고양이 맞춤형 올인원 웹 서비스입니다.
+
+
+### 🌟 주요 서비스 기능
+
+✅ **회원 관리**  
+- 소셜 로그인/회원가입 (구글, 카카오, 네이버)  
+- 프로필 관리 및 수정 (상태메시지, 고양이 정보)  
+- 회원 탈퇴, 유저 차단  
+
+✅ **팔로우/언팔로우**  
+- 다른 사용자 팔로우 및 팔로잉/팔로워 목록 관리  
+
+✅ **고양이 커뮤니티**  
+- 피드(사진) 및 쭈르(영상) 등록, 수정, 삭제  
+- 해시태그, 무한스크롤, 공유 기능  
+- 댓글 및 대댓글, 좋아요  
+
+✅ **게임**  
+- 고양이 카드 맞추기 게임  
+- 랭킹, 시간·횟수 제한, 개인 카드 커스터마이징  
+
+✅ **알림**  
+- SSE 기반 실시간 알림 (댓글, 좋아요, 팔로우, 생일 알림)  
+- 알림 자동 삭제 (30일 후)  
+
+✅ **AI 이미지 검사**  
+- 등록 사진이 고양이인지 AI가 판별  
+- 비고양이 이미지 등록 시 거부  
+
+
+### 🚀 Catchy가 만드는 가치
+
+> 단순한 반려묘 사진 공유를 넘어,  
+> 집사들끼리 교류하고, 게임으로 즐기며,  
+> AI 기술로 고양이 중심 콘텐츠를 관리하는 **혁신적인 고양이 플랫폼**입니다.  
+>  
+> 🐾 **세상 모든 고양이와 집사를 위한 소셜 놀이터, Catchy에서 당신의 고양이 이야기를 들려주세요!**
+
+<br>
 
 ## 🐾 Catchy FE 테스트 결과 보고서
 
@@ -220,8 +222,6 @@
     <img src="./asset/회원탈퇴.gif" />
   </div>
 </details>
-
----
 
 ### 📸 피드 기능
 
@@ -275,20 +275,41 @@
 </details>
 
 <details>
-  <summary>피드 좋아요 알림 발송</summary>
-  <div align="center">
-    <img src="./asset/피드 좋아요 알림 발송.gif" />
-  </div>
-</details>
-
-<details>
   <summary>피드 AI 이미지 검열</summary>
   <div align="center">
     <img src="./asset/피드 AI이미지 검열.gif" />
   </div>
 </details>
 
----
+### 🥫 쭈르 기능
+
+<details>
+  <summary>쭈르 업로드</summary>
+  <div align="center">
+    <img src="./asset/쭈르 업로드.gif" />
+  </div>
+</details>
+
+<details>
+  <summary>쭈르 수정</summary>
+  <div align="center">
+    <img src="./asset/쭈르 수정.gif" />
+  </div>
+</details>
+
+<details>
+  <summary>쭈르 삭제</summary>
+  <div align="center">
+    <img src="./asset/쭈르 삭제.gif" />
+  </div>
+</details>
+
+<details>
+  <summary>쭈르 댓글, 좋아요</summary>
+  <div align="center">
+    <img src="./asset/쭈르 댓글, 좋아요.gif" />
+  </div>
+</details>
 
 ### 👤 프로필 기능
 
@@ -312,8 +333,6 @@
     <img src="./asset/타회원 프로필 조회.gif" />
   </div>
 </details>
-
----
 
 ### 🔔 알림 기능
 
@@ -339,13 +358,18 @@
 </details>
 
 <details>
-  <summary>쭈르 알림 발송</summary>
+  <summary>쭈르 좋아요 알림 발송</summary>
   <div align="center">
     <img src="./asset/쭈르 알림 발송.gif" />
   </div>
 </details>
 
----
+<details>
+  <summary>피드 좋아요 알림 발송</summary>
+  <div align="center">
+    <img src="./asset/피드 좋아요 알림 발송.gif" />
+  </div>
+</details>
 
 ### 🏆 뱃지
 
@@ -356,7 +380,6 @@
   </div>
 </details>
 
-
 ### 🤝 팔로우 기능
 
 <details>
@@ -366,31 +389,39 @@
   </div>
 </details>
 
+### 🎮 게임
 
+<details>
+  <summary>고양이 카드 게임</summary>
+  <div align="center">
+    <img src="./asset/game.gif" />
+  </div>
+</details>
+
+<br>
 
 ## 🔡 요구사항 명세서
 
 <img src="https://github.com/user-attachments/assets/865d3ab8-f4e3-4100-a330-e73d277c71cd" width="900" />
 
-
----
+<br>
 
 ## [📟 REST API 명세서](https://docs.google.com/spreadsheets/d/1LiKpL7lfRMg4xijcw1LJebzHuwfKG9ceprzKavaqNMQ/edit?gid=1844885263#gid=1844885263&range=A1:L45)
 
----
+<br>
 
 ## 🗃️ DB 모델링
 
 
 <img src="https://github.com/user-attachments/assets/b06c9bc7-b80e-41bd-a8af-68afb1cfd843" width="900" />
 
----
+<br>
 
 ## 📈 플로우 차트
 
 <img src="https://github.com/user-attachments/assets/b95b01af-d230-4a2d-b2e1-c338213c965a" />
 
----
+<br>
 
 ## 🪄 Figma
 
@@ -409,9 +440,7 @@
   </tr>
 </table>
 
-
-
----
+<br>
 
 ## 🛜 프로젝트 아키텍처
 
@@ -432,7 +461,7 @@
   <img src="./asset/CICD.drawio.png" alt="CI/CD 파이프라인" width="900" />
 </div>
 
----
+<br>
 
 ## 🚩 젠킨스 파이프라인 파일 스크립트 코드
 
@@ -624,6 +653,7 @@ VITE_KAKAO_JAVASCRIPT_KEY=${KAKAO_KEY}
 <img src="https://raw.githubusercontent.com/beyond-SW-Camp-14th-clover/be14-4th-clover-moodiary-Dev/main/image/CICD%ED%85%8C%EC%8A%A4%ED%8A%B8.png" width="900" />
 사진 수정
 
+<br>
 
 ## 😊 개인 회고록
 
