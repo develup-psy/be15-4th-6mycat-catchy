@@ -18,8 +18,6 @@ import {
   uploadThumbnailImage,
 } from '@/api/jjure.js';
 import { useAuthStore } from '@/stores/auth.js'
-
-
 const showUploadGuideModal = ref(false);
 const showJjureUploadModal = ref(false);
 const showFeedUploadModal = ref(false);
@@ -48,6 +46,9 @@ async function handleFilesSelected({ existingUrls = [], files = [] }) {
   if (isVideo && files.length === 1) {
     uploadStore.setFile(file);
     videoUrl.value = URL.createObjectURL(file);
+
+    console.log("더미데이터 추가")
+    console.log("더미데이터 추가")
 
     await nextTick();
 
@@ -102,6 +103,7 @@ async function handleUpload() {
 async function handleFeedUpload() {
   try {
     const formData = new FormData();
+    console.log("더미 데이터 추가!");
     console.log("더미 데이터 추가!");
     startLoading();
     imageFiles.value.forEach((file) => formData.append('files', file));
