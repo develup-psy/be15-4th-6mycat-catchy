@@ -143,7 +143,7 @@ async function saveProfile() {
 </script>
 
 <template>
-  <div class="flex min-h-screen bg-gray-50 font-sans">
+  <div class="flex h-full bg-gray-50 font-sans">
     <ProfileMenu />
     <div class="flex-1 p-8 flex justify-center items-start">
       <div class="background">

@@ -8,7 +8,7 @@ import FeedUploadModal from '@/features/feed/components/FeedUploadModal.vue';
 import NotificationModal from '@/features/notification/components/NotificationModal.vue';
 import { createFeed, uploadImages } from '@/api/feed.js';
 import { showErrorToast, showSuccessToast } from '@/utills/toast.js';
-import {startLoading, startLoadingAsync} from '@/composable/useLoadingBar.js';
+import {startLoading, startLoadingAsync, stopLoadingAsync} from '@/composable/useLoadingBar.js';
 import { useFeedRefreshStore } from '@/stores/feedRefreshStore.js';
 import { useRouter } from 'vue-router';
 import {

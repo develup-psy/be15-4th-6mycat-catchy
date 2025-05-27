@@ -60,10 +60,9 @@
 ## 📜 목차
 
 #### [💡 기술 스택](#-기술-스택)  <br>
-#### [📢 프로젝트 설명](#-프로젝트-설명)  <br>
+#### [📢 프로젝트 소개](#-프로젝트-소개)  <br>
 #### [🔡 요구사항 명세서](#-요구사항-명세서)  <br>
 #### [📟 REST API 명세서](#-rest-api-명세서)  <br>
-#### [🙆‍♀️ 서비스 기능](#-서비스-기능)  <br>
 #### [🗃️ DB 모델링](#-db-모델링)  <br>
 #### [📈 플로우 차트](#-플로우-차트)  <br>
 #### [🪄 Figma](#-figma)  <br>
@@ -72,7 +71,7 @@
 #### [📱 CI/CD 테스트](#-cicd-테스트)  <br>
 #### [🍪 개인 회고록](#-개인-회고록)  <br>
 
----
+
 
 ## 📢 프로젝트 소개
 
@@ -82,7 +81,6 @@
 > 📸 사진과 🎥 릴스 영상 공유, 👥 팔로우, 💬 댓글, ❤️ 좋아요는 물론,  
 > 🕹️ 게임과 🔔 실시간 알림, 🤖 AI 고양이 이미지 판별 기능까지 제공하는 고양이 맞춤형 올인원 웹 서비스입니다.
 
----
 
 ### 🌟 주요 서비스 기능
 
@@ -111,7 +109,6 @@
 - 등록 사진이 고양이인지 AI가 판별  
 - 비고양이 이미지 등록 시 거부  
 
----
 
 ### 🚀 Catchy가 만드는 가치
 
@@ -121,7 +118,6 @@
 >  
 > 🐾 **세상 모든 고양이와 집사를 위한 소셜 놀이터, Catchy에서 당신의 고양이 이야기를 들려주세요!**
 
----
 
 ## 💡 기술 스택
 
@@ -185,104 +181,96 @@
 
 </div>
 
-<details>
-  <summary><strong>1. 소셜 로그인</strong></summary>
-- 구글
-- 카카오
-- 네이버
-</details>
+
+## 🐾 Catchy FE 테스트 결과 보고서
+
+### 📝 회원가입 & 로그인
 
 <details>
-  <summary><strong>2. 유저</strong></summary>
-- 유저 차단 기능  
-- 프로필 관리  
-- 회원 탈퇴  
-</details>
-
-<details>
-  <summary><strong>3. 팔로우 팔로잉 기능</strong></summary>
-- 유저 팔로우/언팔로우  
-- 팔로워 / 팔로잉 목록 보기  
-</details>
-
-<details>
-  <summary><strong>4. 고양이 커뮤니티 - SNS 기반 게시판</strong></summary>
-- 게시글 작성 (사진 없는 글 등록 불가)  
-- 댓글 & 대댓글 (self join or depth 컬럼 활용)  
-- 좋아요 (Redis Set으로 빠른 확인)  
-- 해시태그 (검색 + 인덱스 튜닝)  
-- 내 글/댓글 보기  
-- 무한스크롤 (Cursor 기반, createdAt+id)    
-- 최대 사진 5장 업로드 제한  
-  
-**심화 기술**  
-  - 유저별 활동량(글/댓글 수) 분석  
-  - 이미지 리사이징 + webp 변환  
-  - S3 + CloudFront  
-  - AI로 고양이 사진 판별  
-</details>
-
-<details>
-  <summary><strong>5. 알림</strong></summary>
-- SSE 기반 알림  
-  - 내 글에 댓글/좋아요 → 실시간 알림  
-- 고양이 생일 알림  
-</details>
-
-<details>
-  <summary><strong>6. 30초 릴스 공유</strong></summary>
-- 릴스 업로드 (프론트 → S3 직업로드)  
-- 배경음악 선택 (Spotify API 사용)  
-- 썸네일 자동 생성 (FFmpeg, Async or Batch)  
-- 좋아요 / 댓글  
-- 공유 기능 (URL 복사, SNS 버튼)
-- 내 릴스 관리  
-</details>
-
-<details>
-  <summary><strong>7. 게임</strong></summary>
-  
-**고양이 카드 맞추기 게임**  
-- 카드 뒤집기  
-- 쌍 맞추기 (시간 제한 or 시도 횟수)  
-- 랭킹 보기 / 다시 도전  
-- 이미지 커스터마이징 (자가 등록한 고양이 사진 기반 카드 구성)  
-
-</details>
-
-<details>
-  <summary><strong>8. 유저 활동량 분석</strong></summary>
-- 조회수  
-- 좋아요 수  
-- 댓글 수  
-</details>
-
----
-
-### 🐾 Catchy FE 테스트 결과 보고서
-
----
-
-#### 🔔 알림 기능
-
-<details>
-  <summary>답글 알림 발송</summary>
+  <summary>구글 회원가입</summary>
   <div align="center">
-    <img src="./asset/답글 알림 발송.gif" />
+    <img src="./asset/구글 회원가입.gif" />
   </div>
 </details>
 
 <details>
-  <summary>댓글 알림 발송</summary>
+  <summary>네이버 회원가입</summary>
   <div align="center">
-    <img src="./asset/댓글 알림 발송.gif" />
+    <img src="./asset/네이버 회원가입.gif" />
   </div>
 </details>
 
 <details>
-  <summary>팔로우 알림 발송</summary>
+  <summary>카카오 회원가입</summary>
   <div align="center">
-    <img src="./asset/팔로우 알림 발송.gif" />
+    <img src="./asset/카카오 회원가입.gif" />
+  </div>
+</details>
+
+<details>
+  <summary>로그인, 로그아웃</summary>
+  <div align="center">
+    <img src="./asset/로그인, 로그아웃.gif" />
+  </div>
+</details>
+
+<details>
+  <summary>회원탈퇴</summary>
+  <div align="center">
+    <img src="./asset/회원탈퇴.gif" />
+  </div>
+</details>
+
+---
+
+### 📸 피드 기능
+
+<details>
+  <summary>피드 등록</summary>
+  <div align="center">
+    <img src="./asset/피드 등록.gif" />
+  </div>
+</details>
+
+<details>
+  <summary>피드 목록 조회</summary>
+  <div align="center">
+    <img src="./asset/피드 목록 조회.gif" />
+  </div>
+</details>
+
+<details>
+  <summary>피드 상세조회</summary>
+  <div align="center">
+    <img src="./asset/피드 상세조회.gif" />
+  </div>
+</details>
+
+<details>
+  <summary>피드 수정</summary>
+  <div align="center">
+    <img src="./asset/피드 수정.gif" />
+  </div>
+</details>
+
+<details>
+  <summary>피드 삭제</summary>
+  <div align="center">
+    <img src="./asset/피드 삭제.gif" />
+  </div>
+</details>
+
+<details>
+  <summary>피드 공유</summary>
+  <div align="center">
+    <img src="./asset/피드 공유.gif" />
+  </div>
+</details>
+
+<details>
+  <summary>피드 좋아요</summary>
+  <div align="center">
+    <img src="./asset/피드 좋아요.gif" />
   </div>
 </details>
 
@@ -294,15 +282,15 @@
 </details>
 
 <details>
-  <summary>쭈르 알림 발송</summary>
+  <summary>피드 AI 이미지 검열</summary>
   <div align="center">
-    <img src="./asset/쭈르 알림 발송.gif" />
+    <img src="./asset/피드 AI이미지 검열.gif" />
   </div>
 </details>
 
 ---
 
-#### 👤 프로필 기능
+### 👤 프로필 기능
 
 <details>
   <summary>본인 프로필 조회</summary>
@@ -327,7 +315,39 @@
 
 ---
 
-#### 🏆 뱃지 & 랭킹
+### 🔔 알림 기능
+
+<details>
+  <summary>답글 알림 발송</summary>
+  <div align="center">
+    <img src="./asset/답글 알림 발송.gif" />
+  </div>
+</details>
+
+<details>
+  <summary>댓글 알림 발송</summary>
+  <div align="center">
+    <img src="./asset/댓글 알림 발송.gif" />
+  </div>
+</details>
+
+<details>
+  <summary>팔로우 알림 발송</summary>
+  <div align="center">
+    <img src="./asset/팔로우 알림 발송.gif" />
+  </div>
+</details>
+
+<details>
+  <summary>쭈르 알림 발송</summary>
+  <div align="center">
+    <img src="./asset/쭈르 알림 발송.gif" />
+  </div>
+</details>
+
+---
+
+### 🏆 뱃지
 
 <details>
   <summary>랭킹 1등, 인플루언서, 생일 뱃지</summary>
@@ -336,7 +356,17 @@
   </div>
 </details>
 
----
+
+### 🤝 팔로우 기능
+
+<details>
+  <summary>팔로우 기능</summary>
+  <div align="center">
+    <img src="./asset/follow.gif" />
+  </div>
+</details>
+
+
 
 ## 🔡 요구사항 명세서
 
@@ -390,20 +420,17 @@
   <img src="./asset/drawio.png" alt="전체 서비스 아키텍처" width="900" />
 </div>
 
----
 
 ### 🔧 서비스 배포 아키텍처
 <div align="center">
   <img src="./asset/drawio_1.png" alt="서비스 배포 아키텍처" width="900" />
 </div>
 
----
 
 ### 🚀 CI/CD 파이프라인
 <div align="center">
   <img src="./asset/CICD.drawio.png" alt="CI/CD 파이프라인" width="900" />
 </div>
-
 
 ---
 
@@ -589,6 +616,7 @@ VITE_KAKAO_JAVASCRIPT_KEY=${KAKAO_KEY}
         }
     }
 }
+
 ```
 
 ## 📱 CI/CD 테스트
