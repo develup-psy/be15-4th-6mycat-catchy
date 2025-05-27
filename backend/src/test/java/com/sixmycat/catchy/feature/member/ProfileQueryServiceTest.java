@@ -9,10 +9,7 @@ import com.sixmycat.catchy.feature.game.query.dto.GameRankingResponse;
 import com.sixmycat.catchy.feature.game.query.service.GameQueryService;
 import com.sixmycat.catchy.feature.member.command.domain.aggregate.Cat;
 import com.sixmycat.catchy.feature.member.command.domain.aggregate.Member;
-import com.sixmycat.catchy.feature.member.query.dto.response.CatResponse;
-import com.sixmycat.catchy.feature.member.query.dto.response.FollowResponse;
-import com.sixmycat.catchy.feature.member.query.dto.response.MemberResponse;
-import com.sixmycat.catchy.feature.member.query.dto.response.MyProfileResponse;
+import com.sixmycat.catchy.feature.member.query.dto.response.*;
 import com.sixmycat.catchy.feature.member.query.mapper.ProfileMapper;
 import com.sixmycat.catchy.feature.member.query.service.ProfileQueryServiceImpl;
 import org.junit.jupiter.api.DisplayName;
@@ -149,7 +146,7 @@ class ProfileQueryServiceTest {
                 .willReturn(new GameRankingResponse(3, 100, 92.5, List.of())); // 1등 아님
 
         // when
-        MyProfileResponse response = profileQueryService.getOtherProfile(targetMemberId);
+        OtherProfileResponse response = profileQueryService.getOtherProfile(1L, targetMemberId);
 
         // then
         assertThat(response.getMember().getId()).isEqualTo(targetMemberId); // 🔄 수정됨
