@@ -411,7 +411,7 @@
 <details>
   <summary>차단 시 차단한 사용자의 게시물 보이지 않기</summary>
   <div align="center">
-    <img src="./asset/차단-시-차단한-사용자의-게시물-보이지-않기.gif" />
+    <img src="./asset/차단 시 차단한 사용자의 게시물 보이지 않기.gif" />
   </div>
 </details>
 
