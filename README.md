@@ -74,7 +74,7 @@
 
 ---
 
-## 📢 ✨ 프로젝트 설명 ✨
+## 📢 프로젝트 소개
 
 ### 🐾 **Catchy: 고양이를 사랑하는 사람들을 위한 올인원 커뮤니티 플랫폼**
 
@@ -96,7 +96,7 @@
 
 ✅ **고양이 커뮤니티**  
 - 피드(사진) 및 쭈르(영상) 등록, 수정, 삭제  
-- 배경음악 선택, 해시태그, 무한스크롤, 공유 기능  
+- 해시태그, 무한스크롤, 공유 기능  
 - 댓글 및 대댓글, 좋아요  
 
 ✅ **게임**  
@@ -259,6 +259,85 @@
 
 ---
 
+### 🐾 Catchy FE 테스트 결과 보고서
+
+---
+
+#### 🔔 알림 기능
+
+<details>
+  <summary>답글 알림 발송</summary>
+  <div align="center">
+    <img src="./asset/답글 알림 발송.gif" />
+  </div>
+</details>
+
+<details>
+  <summary>댓글 알림 발송</summary>
+  <div align="center">
+    <img src="./asset/댓글 알림 발송.gif" />
+  </div>
+</details>
+
+<details>
+  <summary>팔로우 알림 발송</summary>
+  <div align="center">
+    <img src="./asset/팔로우 알림 발송.gif" />
+  </div>
+</details>
+
+<details>
+  <summary>피드 좋아요 알림 발송</summary>
+  <div align="center">
+    <img src="./asset/피드 좋아요 알림 발송.gif" />
+  </div>
+</details>
+
+<details>
+  <summary>쭈르 알림 발송</summary>
+  <div align="center">
+    <img src="./asset/쭈르 알림 발송.gif" />
+  </div>
+</details>
+
+---
+
+#### 👤 프로필 기능
+
+<details>
+  <summary>본인 프로필 조회</summary>
+  <div align="center">
+    <img src="./asset/본인 프로필 조회.gif" />
+  </div>
+</details>
+
+<details>
+  <summary>본인 프로필 수정</summary>
+  <div align="center">
+    <img src="./asset/본인 프로필 수정.gif" />
+  </div>
+</details>
+
+<details>
+  <summary>타회원 프로필 조회</summary>
+  <div align="center">
+    <img src="./asset/타회원 프로필 조회.gif" />
+  </div>
+</details>
+
+---
+
+#### 🏆 뱃지 & 랭킹
+
+<details>
+  <summary>랭킹 1등, 인플루언서, 생일 뱃지</summary>
+  <div align="center">
+    <img src="./asset/랭킹1등, 인플루언서, 생일 뱃지.gif" />
+  </div>
+</details>
+
+---
+
 ## 🔡 요구사항 명세서
 
 <img src="https://github.com/user-attachments/assets/865d3ab8-f4e3-4100-a330-e73d277c71cd" width="900" />
@@ -304,10 +383,27 @@
 
 ---
 
-## 🛜 CI/CD 프로젝트 아키텍처
+## 🛜 프로젝트 아키텍처
 
-<img src="https://github.com/beyond-SW-Camp-14th-clover/be14-4th-clover-moodiary-Dev/raw/main/image/image%20(1).png" width="900" />
-사진 수정
+### 🔨 전체 서비스 아키텍처
+<div align="center">
+  <img src="./asset/drawio.png" alt="전체 서비스 아키텍처" width="900" />
+</div>
+
+---
+
+### 🔧 서비스 배포 아키텍처
+<div align="center">
+  <img src="./asset/drawio_1.png" alt="서비스 배포 아키텍처" width="900" />
+</div>
+
+---
+
+### 🚀 CI/CD 파이프라인
+<div align="center">
+  <img src="./asset/CICD.drawio.png" alt="CI/CD 파이프라인" width="900" />
+</div>
+
 
 ---
 
@@ -494,7 +590,6 @@ VITE_KAKAO_JAVASCRIPT_KEY=${KAKAO_KEY}
     }
 }
 ```
-코드 수정
 
 ## 📱 CI/CD 테스트
 
