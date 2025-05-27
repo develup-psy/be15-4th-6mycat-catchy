@@ -6,6 +6,7 @@ import CommentSection from '@/components/CommentSection.vue';
 import { likeFeed, unLikeFeed } from '@/api/like.js';
 import { startLoading, stopLoading } from '@/composable/useLoadingBar.js';
 import ShareDropdown from '@/components/ShareDropdown.vue';
+import DefaultProfile from '@/components/defaultProfile/DefaultProfile.vue';
 
 const jjure = ref(null);
 const route = useRoute();
@@ -133,7 +134,11 @@ onMounted(async () => {
       <!-- 우측: 작성자 / 댓글 -->
       <div class="right-panel">
         <div class="author-info">
-          <img :src="jjure?.author.profileImageUrl" alt="프로필" class="author-image" />
+          <DefaultProfile
+            :src="jjure?.author.profileImageUrl"
+            :size="34"
+            class="author-image"
+          />
           <span class="author-name">@{{ jjure?.author.nickname }}</span>
         </div>
         <p class="caption-text">{{ jjure?.caption }}</p>
