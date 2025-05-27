@@ -49,6 +49,8 @@ async function handleFilesSelected({ existingUrls = [], files = [] }) {
     uploadStore.setFile(file);
     videoUrl.value = URL.createObjectURL(file);
 
+    console.log("더미데이터 추가")
+
     await nextTick();
 
     showUploadGuideModal.value = false;
