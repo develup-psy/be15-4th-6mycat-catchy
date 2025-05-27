@@ -20,7 +20,7 @@ function handleNotificationModal() {
 
 const navItems = [
   { label: '피드', icon: 'fas fa-home', path: '/feed' },
-  { label: '쮸르', icon: 'fa-solid fa-circle-play', path: '/jjure' },
+  { label: '쭈르', icon: 'fa-solid fa-circle-play', path: '/jjure' },
   { label: '게임', icon: 'fas fa-gamepad', path: '/game' },
   { label: '알림', icon: 'fas fa-bell', type: 'noti-modal' },
   { label: '만들기', icon: 'fa-solid fa-square-plus', type: 'modal' },
