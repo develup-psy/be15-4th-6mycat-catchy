@@ -180,23 +180,23 @@ const filteredComments = computed(() => {
       </div>
     </div>
 
-    <div class="flex gap-2 px-2 py-3 border-t border-gray-300">
+    <form @submit.prevent="addComment" class="flex gap-2 px-2 py-3 border-t border-gray-300">
       <input
-        ref="commentInput"
-        v-model="newComment"
-        type="text"
-        placeholder="댓글 달기..."
-        @keyup.enter="addComment"
-        class="flex-1 px-2 py-1.5 text-sm"
+          ref="commentInput"
+          v-model="newComment"
+          type="text"
+          placeholder="댓글 달기..."
+          @keyup.enter="addComment"
+          class="flex-1 px-2 py-1.5 text-sm"
       />
       <button
-        @click="addComment"
-        :disabled="!newComment.trim()"
-        class="bg-transparent border-none text-[#007bff] font-bold text-sm cursor-pointer disabled:text-gray-300 disabled:cursor-default"
+          @click="addComment"
+          :disabled="!newComment.trim()"
+          class="bg-transparent border-none text-[#007bff] font-bold text-sm cursor-pointer disabled:text-gray-300 disabled:cursor-default"
       >
         게시
       </button>
-    </div>
+    </form>
   </div>
 </template>
 
