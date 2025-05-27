@@ -34,7 +34,7 @@ function handleNotificationModal() {
 
 <style scoped>
 .layout {
-  @apply flex w-full bg-pink-50 text-gray-800;
+  @apply flex w-full h-screen bg-pink-50 text-gray-800;
 }
 
 .sidebar {
