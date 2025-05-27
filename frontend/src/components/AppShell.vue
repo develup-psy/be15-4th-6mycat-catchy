@@ -48,6 +48,7 @@ async function handleFilesSelected({ existingUrls = [], files = [] }) {
     videoUrl.value = URL.createObjectURL(file);
 
     console.log("더미데이터 추가")
+    console.log("더미데이터 추가")
 
     await nextTick();
 
