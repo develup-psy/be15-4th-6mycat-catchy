@@ -42,6 +42,11 @@ router.beforeEach((to) => {
     }, 1000);
   }
 
+  /* 로그인 되어 있는데 Login 및 signup으로 이동시 메인으로 이동 */
+  if ((to.name === 'login' || to.name === 'signup') && authStore.isAuthenticated) {
+    return { name: 'main' };
+  }
+
   // 로그인된 사용자가 로그인/회원가입 페이지에 접근하면 메인으로
   // 로그인된 사용자가 비회원 전용 페이지 접근 시
   if (to.meta.guestOnly && authStore.isAuthenticated) {
