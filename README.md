@@ -513,15 +513,19 @@ pipeline {
     }
 
     environment {
-        DOCKERHUB_CREDENTIALS = credentials('DOCKERHUB_PASSWORD')
         GITHUB_URL = 'https://github.com/be15-six-my-cat/be15-4th-sixmycat-catchy-DEVOPS.git'
+        MANIFESTS_GITHUB_URL = 'https://github.com/be15-six-my-cat/be15-4th-k8s-manifestes'
+        GIT_USERNAME = 'develup_psy'
+        GIT_EMAIL = 'sksssd456@gmail.com'
+        PATH = "/usr/local/bin:$PATH"
+        DOCKER_USER = 'psy99'
     }
 
     stages {
         stage('Preparation') {
             steps {
                 script {
-                    sh '/opt/homebrew/bin/docker --version'
+                    sh '/usr/local/bin/docker --version'
                 }
             }
         }
@@ -529,6 +533,9 @@ pipeline {
         stage('Clone Repository') {
             steps {
                 git branch: 'main', url: "${env.GITHUB_URL}"
+                script {
+                    env.GIT_COMMIT_SHORT = sh(script: "git rev-parse --short HEAD", returnStdout: true).trim()
+                }
             }
         }
 
@@ -542,9 +549,7 @@ pipeline {
         }
 
         stage('Build Backend') {
-            when {
-                expression { return env.CHANGED_BACKEND }
-            }
+            when { expression { return env.CHANGED_BACKEND } }
             steps {
                 dir('backend') {
                     script {
@@ -556,9 +561,7 @@ pipeline {
         }
 
         stage('Build Frontend') {
-            when {
-                expression { return env.CHANGED_FRONTEND }
-            }
+            when { expression { return env.CHANGED_FRONTEND } }
             tools {
                 nodejs '24.1.0'
             }
@@ -570,56 +573,130 @@ pipeline {
             }
         }
 
-        stage('Docker Build and Push - Backend') {
-            when {
-                expression { return env.CHANGED_BACKEND }
-            }
-            steps {
-                dir('backend') {
-                    script {
-                        withCredentials([usernamePassword(
-                            credentialsId: 'DOCKERHUB_PASSWORD',
-                            usernameVariable: 'DOCKER_USER',
-                            passwordVariable: 'DOCKER_PASS'
-                        )]) {
-                            sh 'mkdir -p ~/.docker'
-                            sh 'echo "{ \"credsStore\": \"\" }" > ~/.docker/config.json'
+        stage('Docker Build and Push') {
+            parallel {
+                stage('Backend Docker') {
+                    when { expression { return env.CHANGED_BACKEND } }
+                    steps {
+                        dir('backend') {
+                            script {
+                                def dockerConfigDir = "/tmp/.docker-backend-${env.BUILD_ID}"
+                                sh "mkdir -p ${dockerConfigDir}"
+                                withCredentials([usernamePassword(
+                                    credentialsId: 'DOCKERHUB_PASSWORD',
+                                    usernameVariable: 'DOCKER_USER',
+                                    passwordVariable: 'DOCKER_PASS'
+                                )]) {
+                                    sh "echo \$DOCKER_PASS | /usr/local/bin/docker --config ${dockerConfigDir} login --username psy99 --password-stdin"
+                                    sh "/usr/local/bin/docker --config ${dockerConfigDir} build -t ${DOCKER_USER}/k8s-boot:${currentBuild.number} -t ${DOCKER_USER}/k8s-boot:${env.GIT_COMMIT_SHORT} -t ${DOCKER_USER}/k8s-boot:latest ."
+                                    sh "/usr/local/bin/docker --config ${dockerConfigDir} push ${DOCKER_USER}/k8s-boot:${currentBuild.number}"
+                                    sh "/usr/local/bin/docker --config ${dockerConfigDir} push ${DOCKER_USER}/k8s-boot:${env.GIT_COMMIT_SHORT}"
+                                    sh "/usr/local/bin/docker --config ${dockerConfigDir} push ${DOCKER_USER}/k8s-boot:latest"
+                                }
+                            }
+                        }
+                    }
+                }
 
-                            sh '/opt/homebrew/bin/docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}'
-                            sh '/opt/homebrew/bin/docker build -t ${DOCKER_USER}/k8s-boot:latest .'
-                            sh '/opt/homebrew/bin/docker push ${DOCKER_USER}/k8s-boot:latest'
+                stage('Frontend Docker') {
+                    when { expression { return env.CHANGED_FRONTEND } }
+                    steps {
+                        dir('frontend') {
+                            script {
+                                def dockerConfigDir = "/tmp/.docker-frontend-${env.BUILD_ID}"
+                                sh "mkdir -p ${dockerConfigDir}"
+                                withCredentials([usernamePassword(
+                                    credentialsId: 'DOCKERHUB_PASSWORD',
+                                    usernameVariable: 'DOCKER_USER',
+                                    passwordVariable: 'DOCKER_PASS'
+                                ), string(credentialsId: 'KAKAO_JS_KEY', variable: 'KAKAO_KEY')]) {
+                                    writeFile file: '.env.production', text: """
+                                        VITE_API_URL=http://localhost/boot/api/v1
+                                        VITE_AWS_BUCKET_NAME=be15-4th-catchy-s3-bucket
+                                        VITE_AWS_REGION=ap-northeast-2
+                                        VITE_KAKAO_JAVASCRIPT_KEY=${KAKAO_KEY}
+                                    """
+                                    sh "echo \$DOCKER_PASS | /usr/local/bin/docker --config ${dockerConfigDir} login --username psy99 --password-stdin"
+                                    sh "/usr/local/bin/docker --config ${dockerConfigDir} build -t ${DOCKER_USER}/k8s-vue:${currentBuild.number} -t ${DOCKER_USER}/k8s-vue:${env.GIT_COMMIT_SHORT} -t ${DOCKER_USER}/k8s-vue:latest ."
+                                    sh "/usr/local/bin/docker --config ${dockerConfigDir} push ${DOCKER_USER}/k8s-vue:${currentBuild.number}"
+                                    sh "/usr/local/bin/docker --config ${dockerConfigDir} push ${DOCKER_USER}/k8s-vue:${env.GIT_COMMIT_SHORT}"
+                                    sh "/usr/local/bin/docker --config ${dockerConfigDir} push ${DOCKER_USER}/k8s-vue:latest"
+                                }
+                            }
                         }
                     }
                 }
             }
         }
 
-        stage('Docker Build and Push - Frontend') {
-            when {
-                expression { return env.CHANGED_FRONTEND }
-            }
-            steps {
-                dir('frontend') {
-                    withCredentials([string(credentialsId: 'KAKAO_JS_KEY', variable: 'KAKAO_KEY')]) {
-                        writeFile file: '.env.production', text: """
-VITE_API_URL=http://localhost/boot/api/v1
-VITE_AWS_BUCKET_NAME=be15-4th-catchy-s3-bucket
-VITE_AWS_REGION=ap-northeast-2
-VITE_KAKAO_JAVASCRIPT_KEY=${KAKAO_KEY}
-                        """
+        stage('Update K8S Manifests') {
+            parallel {
+                stage('Backend Manifest') {
+                    when { expression { return env.CHANGED_BACKEND || env.BACKEND_IMAGE_BUILT } }
+                    steps {
+                        dir('manifests') {
+                            git branch: 'main', url: "${env.MANIFESTS_GITHUB_URL}", credentialsId: 'github'
+                            sh "git config user.name '${env.GIT_USERNAME}'"
+                            sh "git config user.email '${env.GIT_EMAIL}'"
+                            sh "sed -i '' 's|image: .*k8s-boot:.*|image: ${DOCKER_USER}/k8s-boot:${currentBuild.number}|g' boot-dep.yml"
+                            sh "git add boot-dep.yml"
+                            sh "git commit -m '[UPDATE] backend image to ${currentBuild.number}'"
+                            sh "git push origin main || echo 'Push failed, check branch protection.'"
+                        }
                     }
-                    script {
-                        withCredentials([usernamePassword(
-                            credentialsId: 'DOCKERHUB_PASSWORD',
-                            usernameVariable: 'DOCKER_USER',
-                            passwordVariable: 'DOCKER_PASS'
-                        )]) {
-                            sh 'mkdir -p ~/.docker'
-                            sh 'echo "{ \"credsStore\": \"\" }" > ~/.docker/config.json'
+                }
 
-                            sh '/opt/homebrew/bin/docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}'
-                            sh '/opt/homebrew/bin/docker build -t ${DOCKER_USER}/k8s-vue:latest .'
-                            sh '/opt/homebrew/bin/docker push ${DOCKER_USER}/k8s-vue:latest'
+                stage('Frontend Manifest') {
+                    when { expression { return env.CHANGED_FRONTEND || env.FRONTEND_IMAGE_BUILT } }
+                    steps {
+                        dir('manifests') {
+                            git branch: 'main', url: "${env.MANIFESTS_GITHUB_URL}", credentialsId: 'github'
+                            sh "git config user.name '${env.GIT_USERNAME}'"
+                            sh "git config user.email '${env.GIT_EMAIL}'"
+                            sh "sed -i '' 's|image: .*k8s-vue:.*|image: ${DOCKER_USER}/k8s-vue:${currentBuild.number}|g' vue-dep.yml"
+                            sh "git add vue-dep.yml"
+                            sh "git commit -m '[UPDATE] frontend image to ${currentBuild.number}'"
+                            sh "git push origin main || echo 'Push failed, check branch protection.'"
+                        }
+                    }
+                }
+            }
+        }
+
+        stage('ArgoCD Sync') {
+            steps {
+                script {
+                    withCredentials([
+                        string(credentialsId: 'ARGOCD_SERVER', variable: 'ARGOCD_SERVER'),
+                        string(credentialsId: 'ARGOCD_USERNAME', variable: 'ARGOCD_USERNAME'),
+                        string(credentialsId: 'ARGOCD_PASSWORD', variable: 'ARGOCD_PASSWORD')
+                    ]) {
+                        echo "ArgoCD 로그인 시도 중..."
+        
+                        def loginStatus = sh(script: """
+                            /opt/homebrew/bin/argocd login localhost:8888 \
+                                --username ${ARGOCD_USERNAME} \
+                                --password ${ARGOCD_PASSWORD} \
+                                --insecure
+                        """, returnStatus: true)
+        
+                        if (loginStatus != 0) {
+                            error "ArgoCD 로그인 실패! 서버(${ARGOCD_SERVER}), 사용자(${ARGOCD_USERNAME})"
+                        }
+                        echo "ArgoCD 로그인 성공!"
+        
+                        if (env.CHANGED_BACKEND) {
+                            echo "Backend 앱 동기화 시작..."
+                            sh "/opt/homebrew/bin/argocd app sync catchy-backend-app"
+                            sh "/opt/homebrew/bin/argocd app wait catchy-backend-app --health"
+                            echo "ackend 앱 동기화 완료!"
+                        }
+        
+                        if (env.CHANGED_FRONTEND) {
+                            echo "Frontend 앱 동기화 시작..."
+                            sh "/opt/homebrew/bin/argocd app sync catchy-frontend-app"
+                            sh "/opt/homebrew/bin/argocd app wait catchy-frontend-app --health"
+                            echo "rontend 앱 동기화 완료!"
                         }
                     }
                 }
@@ -630,7 +707,7 @@ VITE_KAKAO_JAVASCRIPT_KEY=${KAKAO_KEY}
     post {
         always {
             script {
-                sh '/opt/homebrew/bin/docker logout || true'
+                sh "rm -rf /tmp/.docker-* || true"
             }
         }
         success {
@@ -650,9 +727,9 @@ VITE_KAKAO_JAVASCRIPT_KEY=${KAKAO_KEY}
                         **결과:** :white_check_mark: ${currentBuild.currentResult}
                         **실행 시간:** ${currentBuild.duration / 1000}s
                         **링크:** [빌드 결과 보기](${env.BUILD_URL})
-                        """,
+                        """.stripIndent(),
                         title: "${env.JOB_NAME} 빌드 성공!",
-                        webhookURL: "$DISCORD"
+                        webhookURL: DISCORD
                     )
                 }
             }
@@ -674,9 +751,9 @@ VITE_KAKAO_JAVASCRIPT_KEY=${KAKAO_KEY}
                         **결과:** :x: ${currentBuild.currentResult}
                         **실행 시간:** ${currentBuild.duration / 1000}s
                         **링크:** [빌드 결과 보기](${env.BUILD_URL})
-                        """,
+                        """.stripIndent(),
                         title: "${env.JOB_NAME} 빌드 실패!",
-                        webhookURL: "$DISCORD"
+                        webhookURL: DISCORD
                     )
                 }
             }
