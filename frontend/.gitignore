@@ -30,5 +30,6 @@ coverage
 *.tsbuildinfo
 
 .env.production
+.env
 
 .DS_Store
