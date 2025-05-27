@@ -1,6 +1,5 @@
-<!-- src/features/profile/components/ProfileMenu.vue -->
 <template>
-  <aside class="w-64 p-4 border-r">
+  <aside class="w-64 p-4 border-r h-screen overflow-y-auto">
     <h2 class="text-lg font-semibold mb-4">계정</h2>
     <ul class="space-y-2">
       <li>
@@ -42,6 +41,7 @@
     </ul>
   </aside>
 </template>
+
 
 <script setup>
 import { useRoute } from 'vue-router';
