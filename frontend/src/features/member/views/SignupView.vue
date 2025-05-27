@@ -36,11 +36,11 @@ import KakaoIcon from '@/assets/images/member/kakao-talk-pink.png';
 
 <style scoped>
 .main-frame {
-  height: auto;
+  height: 100vh;
   width: auto;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   gap: 32px;
   padding-top: 180px;

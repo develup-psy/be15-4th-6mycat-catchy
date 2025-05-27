@@ -246,6 +246,7 @@ function handleDeleteCat(cat) {
   align-items: center;
   gap: 24px;
   padding-top: 80px;
+  padding-bottom: 80px;
 }
 
 .profile-frame {
