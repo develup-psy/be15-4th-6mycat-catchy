@@ -770,7 +770,7 @@ pipeline {
 <details>
   <summary>CI/CD 테스트 보기/숨기기</summary>
   <div align="center">
-    <img src="./CI_CD 테스트.gif" alt="CI/CD 테스트" width="900" />
+  <img src="./asset/ci_cd 테스트.gif" alt="CI/CD 테스트" width="900" />
   </div>
 </details>
 
