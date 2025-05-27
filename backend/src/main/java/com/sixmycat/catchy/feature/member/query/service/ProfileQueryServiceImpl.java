@@ -72,7 +72,7 @@ public class ProfileQueryServiceImpl implements ProfileQueryService {
 
         BadgeResponse badges = BadgeResponse.builder()
                 .isTopRanker(isTopRanker)
-                .isInfluencer(false)
+                .isInfluencer(true)
                 .isBirthday(isBirthday)
                 .build();
 
