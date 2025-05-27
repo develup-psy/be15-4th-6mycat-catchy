@@ -43,8 +43,11 @@ router.beforeEach((to) => {
   }
 
   // 로그인된 사용자가 로그인/회원가입 페이지에 접근하면 메인으로
-  if ((to.name === 'login' || to.name === 'signup') && authStore.isAuthenticated) {
-    return { name: 'main' };
+  // 로그인된 사용자가 비회원 전용 페이지 접근 시
+  if (to.meta.guestOnly && authStore.isAuthenticated) {
+    showErrorToast('이미 로그인된 상태입니다.');
+
+    return { path: '/feed' };
   }
 });
 
