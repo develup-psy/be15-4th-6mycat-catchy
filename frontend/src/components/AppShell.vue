@@ -102,6 +102,7 @@ async function handleUpload() {
 async function handleFeedUpload() {
   try {
     const formData = new FormData();
+    console.log("더미 데이터 추가!");
     startLoading();
     imageFiles.value.forEach((file) => formData.append('files', file));
 
