@@ -180,7 +180,7 @@ const filteredComments = computed(() => {
       </div>
     </div>
 
-    <form @submit.prevent="addComment" class="flex gap-2 px-2 py-3 border-t border-gray-300">
+    <div class="flex gap-2 px-2 py-3 border-t border-gray-300">
       <input
           ref="commentInput"
           v-model="newComment"
@@ -196,7 +196,7 @@ const filteredComments = computed(() => {
       >
         게시
       </button>
-    </form>
+    </div>
   </div>
 </template>
 
