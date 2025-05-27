@@ -14,6 +14,10 @@ const fetchFn = async (page) => {
     const sendedPage = page - 1;
     startLoading();
     const { data } = await fetchJjureList({ page: sendedPage, size });
+    console.log("더미 데이터 추가")
+    console.log("더미 데이터 추가")
+    console.log("더미 데이터 추가")
+
     return data;
   } catch (e) {
     console.log(e + '알림 목록 초기 로드 실패');
