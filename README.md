@@ -312,28 +312,28 @@
 <details>
   <summary>쭈르 업로드</summary>
   <div align="center">
-    <img src="./asset/쭈르 업로드.gif" />
+    <img src="./asset/쮸르 업로드.gif" />
   </div>
 </details>
 
 <details>
   <summary>쭈르 수정</summary>
   <div align="center">
-    <img src="./asset/쭈르 수정.gif" />
+    <img src="./asset/쮸르 수정.gif" />
   </div>
 </details>
 
 <details>
   <summary>쭈르 삭제</summary>
   <div align="center">
-    <img src="./asset/쭈르 삭제.gif" />
+    <img src="./asset/르 삭제.gif" />
   </div>
 </details>
 
 <details>
   <summary>쭈르 댓글, 좋아요</summary>
   <div align="center">
-    <img src="./asset/쭈르 댓글, 좋아요.gif" />
+    <img src="./asset/쮸르 댓글, 좋아요.gif" />
   </div>
 </details>
 
@@ -770,7 +770,7 @@ pipeline {
 <details>
   <summary>CI/CD 테스트 보기/숨기기</summary>
   <div align="center">
-  <img src="./asset/ci_cd 테스트.gif" alt="CI/CD 테스트" width="900" />
+  <img src="./asset/ci_cd 테스트v2.gif" alt="CI/CD 테스트" width="900" />
   </div>
 </details>
 
