@@ -312,28 +312,28 @@
 <details>
   <summary>쭈르 업로드</summary>
   <div align="center">
-    <img src="./asset/쭈르 업로드.gif" />
+    <img src="./asset/쮸르 업로드.gif" />
   </div>
 </details>
 
 <details>
   <summary>쭈르 수정</summary>
   <div align="center">
-    <img src="./asset/쭈르 수정.gif" />
+    <img src="./asset/쮸르 수정.gif" />
   </div>
 </details>
 
 <details>
   <summary>쭈르 삭제</summary>
   <div align="center">
-    <img src="./asset/쭈르 삭제.gif" />
+    <img src="./asset/르 삭제.gif" />
   </div>
 </details>
 
 <details>
   <summary>쭈르 댓글, 좋아요</summary>
   <div align="center">
-    <img src="./asset/쭈르 댓글, 좋아요.gif" />
+    <img src="./asset/쮸르 댓글, 좋아요.gif" />
   </div>
 </details>
 
