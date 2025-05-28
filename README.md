@@ -326,7 +326,7 @@
 <details>
   <summary>쭈르 삭제</summary>
   <div align="center">
-    <img src="./asset/르 삭제.gif" />
+    <img src="./asset/쮸르 삭제.gif" />
   </div>
 </details>
 
