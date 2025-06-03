@@ -662,46 +662,6 @@ pipeline {
                 }
             }
         }
-
-        stage('ArgoCD Sync') {
-            steps {
-                script {
-                    withCredentials([
-                        string(credentialsId: 'ARGOCD_SERVER', variable: 'ARGOCD_SERVER'),
-                        string(credentialsId: 'ARGOCD_USERNAME', variable: 'ARGOCD_USERNAME'),
-                        string(credentialsId: 'ARGOCD_PASSWORD', variable: 'ARGOCD_PASSWORD')
-                    ]) {
-                        echo "ArgoCD 로그인 시도 중..."
-        
-                        def loginStatus = sh(script: """
-                            /opt/homebrew/bin/argocd login localhost:8888 \
-                                --username ${ARGOCD_USERNAME} \
-                                --password ${ARGOCD_PASSWORD} \
-                                --insecure
-                        """, returnStatus: true)
-        
-                        if (loginStatus != 0) {
-                            error "ArgoCD 로그인 실패! 서버(${ARGOCD_SERVER}), 사용자(${ARGOCD_USERNAME})"
-                        }
-                        echo "ArgoCD 로그인 성공!"
-        
-                        if (env.CHANGED_BACKEND) {
-                            echo "Backend 앱 동기화 시작..."
-                            sh "/opt/homebrew/bin/argocd app sync catchy-backend-app"
-                            sh "/opt/homebrew/bin/argocd app wait catchy-backend-app --health"
-                            echo "ackend 앱 동기화 완료!"
-                        }
-        
-                        if (env.CHANGED_FRONTEND) {
-                            echo "Frontend 앱 동기화 시작..."
-                            sh "/opt/homebrew/bin/argocd app sync catchy-frontend-app"
-                            sh "/opt/homebrew/bin/argocd app wait catchy-frontend-app --health"
-                            echo "rontend 앱 동기화 완료!"
-                        }
-                    }
-                }
-            }
-        }
     }
 
     post {
